@@ -31,18 +31,38 @@ public class Display {
 	/* window color */
 	private static float[] _clearColor = { 0, 0, 0 };
 	
+	/**
+	 * Gets the window id
+	 * 
+	 * @return glfw window id
+	 */
 	public static long getWindowID() {
 		return _windowID;
 	}
 	
+	/**
+	 * Gets the window width
+	 * 
+	 * @return window width
+	 */
 	public static int getWidth() {
 		return _width;
 	}
 
+	/**
+	 * Gets the window height
+	 * 
+	 * @return window height
+	 */
 	public static int getHeight() {
 		return _height;
 	}
 	
+	/**
+	 * Gets the window title
+	 * 
+	 * @return window title
+	 */
 	public static String getTitle() {
 		return _title;
 	}
@@ -86,7 +106,13 @@ public class Display {
 		GL.createCapabilities();
 	}
 	
+	/**
+	 * Terminate GL
+	 * 
+	 */
 	public static void Terminate() {
+		_initialized = false;
+		
 		glfwDestroyWindow(_windowID);
 		GL.destroy();
 		glfwTerminate();

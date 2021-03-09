@@ -7,45 +7,39 @@ import com.therealjoe24.skygl.renderer.Renderer;
 import com.therealjoe24.skygl.renderer.ShaderInstance;
 import com.therealjoe24.skygl.renderer.ShaderObject;
 import com.therealjoe24.skygl.renderer.ShaderProgram;
+import com.therealjoe24.skygl.texture.Texture;
 
 import static org.lwjgl.opengl.GL45.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Display.Create(640, 480, "Window");
+		Display.Create(512, 512, "Window");
 		
 		float[] positions = {
-			-0.5f, 0.5f, 0, 
-			-0.5f, -0.5f, 0, 
-			0.5f, -0.5f, 0, 
-			0.5f, 0.5f
+			-1,  1, 0, 
+			-1, -1, 0, 
+			 1, -1, 0, 
+			 1,  1, 0,
+		};
+		float[] texturePositions = {
+			 1,  1, 
+			 1,  0, 
+			 0,  0, 
+			 0,  1
 		};
 		int[] indices = {
-				0, 1, 2,
-				2,3,0
-			};
+			0, 1, 2,
+			2, 3, 0,
+		};
  		
 		BufferLoader loader = new BufferLoader();
-		PrimitiveMesh mesh = loader.LoadToVAO(indices, positions);
+		PrimitiveMesh mesh = loader.LoadToVAO(indices, positions, texturePositions);
 		
-		String vsSource =  
-				"#version 110\n"+
-		        "attribute vec3 vPos;\n"+
-		        "void main()\n"+
-		        "{\n"+
-		        "    gl_Position = vec4(vPos, 1.0);\n"+
-		        "}\n";
-		String fsSource = 
-				"#version 110\n"+
-				"uniform vec3 color;\n"+
-		        "void main()\n"+
-		        "{\n"+
-		        "    gl_FragColor = vec4(color, 1.0);\n"+
-		        "}\n";
+		String vsSource = ShaderObject.LoadSource("res/shader.vert");
+		String fsSource = ShaderObject.LoadSource("res/shader.frag");
 		
 		ShaderObject vs = new ShaderObject(GL_VERTEX_SHADER, vsSource);
 		ShaderObject fs = new ShaderObject(GL_FRAGMENT_SHADER, fsSource);
@@ -58,19 +52,35 @@ public class Main {
 		
 		Renderer renderer = new Renderer();
 		
-		Display.ShowWindow();
-		Display.setClearColor(1, 0, 0);
+		Texture texture = Texture.LoadTexture("res/TheRealJoe24.png");
+		Texture texture2 = Texture.LoadTexture("res/wall.png");
 		
-		instance.SetAuxUniform("color", new float[] { 1,0,1 });
+		instance.SetAuxUniform("ourTexture", 0);
+		
+		Display.setClearColor(0, 0, 0);
+		Display.ShowWindow();
+		
+		long i = 0;
+		
+		Texture current = texture;
 		
 		while (!Display.windowShouldClose()) {
 			Display.PollEvents();
 			
 			Display.ClearScreen();
 			
+			if (i % 8000 == 0) {
+				if (current == texture)
+					current = texture2;
+				else if (current == texture2)
+					current = texture;
+			}
+			current.bind();
 			renderer.RenderMesh(instance, mesh);
 			
 			Display.SwapBuffers();
+			
+			i++;
 		}
 		
 		loader.Terminate();

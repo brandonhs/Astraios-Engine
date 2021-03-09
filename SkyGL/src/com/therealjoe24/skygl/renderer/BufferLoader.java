@@ -74,6 +74,26 @@ public class BufferLoader {
 	}
 	
 	/**
+	 * Stores data in primitive mesh
+	 * 
+	 * @param positions
+	 * @param indices
+	 * @return primitive mesh
+	 */
+	public PrimitiveMesh LoadToVAO(int[] indices, float[] positions, float[] texturePositions) {
+		int vao = glCreateVertexArrays();
+		_vaos.add(vao);
+		glBindVertexArray(vao);
+		
+		bindIndicesBuffer(indices);
+		storeInAttribute(0, positions, 3);
+		storeInAttribute(1, texturePositions, 2);
+		
+		glBindVertexArray(0);
+		return new PrimitiveMesh(indices.length, vao);
+	}
+	
+	/**
 	 * Stores indices in GL_ELEMENT_ARRAY_BUFFER
 	 * 
 	 * @param data
