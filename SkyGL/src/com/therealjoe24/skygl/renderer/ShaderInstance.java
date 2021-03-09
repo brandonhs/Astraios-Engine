@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.management.RuntimeErrorException;
 
+import com.therealjoe24.skygl.texture.Texture;
+
 import static org.lwjgl.opengl.GL45.*;
 
 public class ShaderInstance {
@@ -13,6 +15,8 @@ public class ShaderInstance {
 	private ShaderProgram _program;
 	private Map<String, Map.Entry<Integer, Integer>> _auxLocations;
 	private Map<String, Object> _auxValues;
+	
+	private Map<String, Texture> _textures;
 	
 	public final static String[] defaultUniforms = {
 			"uModelMatrix", "uProjectionMatrix", "uViewMatrix"
@@ -26,7 +30,8 @@ public class ShaderInstance {
 	public ShaderInstance(ShaderProgram program) {
 		_program = program;
 		_auxLocations = new HashMap<String, Map.Entry<Integer, Integer>>();
-		_auxValues = new HashMap<String, Object>(); 
+		_auxValues = new HashMap<String, Object>();
+		_textures = new HashMap<String, Texture>();
 		
 		for (String name : program.getUniformNames()) {
 			int location = program.getUniformLocation(name);
@@ -38,6 +43,8 @@ public class ShaderInstance {
 	/**
 	 * Sets an auxiliary uniform
 	 * 
+	 * If the value is a texture, it will be added to a list of textures to be bound.
+	 * 
 	 * @param name
 	 * @param value
 	 * @throws RuntimeException
@@ -46,7 +53,13 @@ public class ShaderInstance {
 		if (!_auxLocations.containsKey(name)) {
 			throw new RuntimeException("Invalid aux uniform name");
 		}
-		_auxValues.put(name, value);
+		if (value.getClass() == Texture.class) {
+			System.out.println("Hey there");
+			_textures.put(name, (Texture)value);
+			_auxValues.put(name, 0);
+		} else {
+			_auxValues.put(name, value);
+		}
 	}
 	
 	/**
@@ -56,39 +69,47 @@ public class ShaderInstance {
 	 */
 	public void SetUniforms() {
 		for (String name : _auxLocations.keySet()) {
-			Map.Entry<Integer, Integer> entry = _auxLocations.get(name);
-			int type = entry.getValue();
-			int location = entry.getKey();
-			Object value = _auxValues.get(name);
-			try {
-				switch (type) {
-					case GL_FLOAT:
-						glUniform1f(location, (float)value);
-						break;
-					case GL_FLOAT_VEC2:
-						glUniform2fv(location, (float[])value);
-						break;
-					case GL_FLOAT_VEC3:
-						glUniform3fv(location, (float[])value);
-						break;
-					case GL_FLOAT_VEC4:
-						glUniform4fv(location, (float[])value);
-						break;
-					case GL_INT:
-						glUniform1i(location, (int)value);
-						break;
-					case GL_INT_VEC2:
-						glUniform2iv(location, (int[])value);
-						break;
-					case GL_INT_VEC3:
-						glUniform3iv(location, (int[])value);
-						break;
-					case GL_INT_VEC4:
-						glUniform4iv(location, (int[])value);
-						break;
+			if (_auxLocations.containsKey(name)) {
+				Map.Entry<Integer, Integer> entry = _auxLocations.get(name);
+				int type = entry.getValue();
+				int location = entry.getKey();
+				Object value = _auxValues.get(name);
+				try {
+					switch (type) {
+						case GL_FLOAT:
+							glUniform1f(location, (float)value);
+							break;
+						case GL_FLOAT_VEC2:
+							glUniform2fv(location, (float[])value);
+							break;
+						case GL_FLOAT_VEC3:
+							glUniform3fv(location, (float[])value);
+							break;
+						case GL_FLOAT_VEC4:
+							glUniform4fv(location, (float[])value);
+							break;
+						case GL_INT:
+							glUniform1i(location, (int)value);
+							break;
+						case GL_INT_VEC2:
+							glUniform2iv(location, (int[])value);
+							break;
+						case GL_INT_VEC3:
+							glUniform3iv(location, (int[])value);
+							break;
+						case GL_INT_VEC4:
+							glUniform4iv(location, (int[])value);
+							break;
+						default:
+							break;
+					}
+				} catch (ClassCastException e) {
+					e.printStackTrace();
 				}
-			} catch (ClassCastException e) {
-				throw new RuntimeException("Value is not of the correct type!");
+			}
+			if (_textures.containsKey(name)) {
+				Texture texture = _textures.get(name);
+				texture.bind();
 			}
 		}
 	}
@@ -96,8 +117,10 @@ public class ShaderInstance {
 	/**
 	 * 
 	 */
-	public void onRender() {
-		
+	public void postRender() {
+		for (String name : _textures.keySet()) {
+			_textures.get(name).unbind();
+		}
 	}
 	
 	public ShaderProgram getShaderProgram() {

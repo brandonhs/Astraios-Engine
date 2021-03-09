@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) {
-		Display.Create(512, 512, "Window");
+		Display.Create(512, 512, "Window", true);
 		
 		float[] positions = {
 			-1,  1, 0, 
@@ -52,35 +52,20 @@ public class Main {
 		
 		Renderer renderer = new Renderer();
 		
-		Texture texture = Texture.LoadTexture("res/TheRealJoe24.png");
-		Texture texture2 = Texture.LoadTexture("res/wall.png");
+		Texture texture = Texture.LoadTexture("res/wall.png");
 		
-		instance.SetAuxUniform("ourTexture", 0);
+		instance.SetAuxUniform("uTexture", texture);
 		
 		Display.setClearColor(0, 0, 0);
 		Display.ShowWindow();
-		
-		long i = 0;
-		
-		Texture current = texture;
 		
 		while (!Display.windowShouldClose()) {
 			Display.PollEvents();
 			
 			Display.ClearScreen();
-			
-			if (i % 8000 == 0) {
-				if (current == texture)
-					current = texture2;
-				else if (current == texture2)
-					current = texture;
-			}
-			current.bind();
 			renderer.RenderMesh(instance, mesh);
 			
 			Display.SwapBuffers();
-			
-			i++;
 		}
 		
 		loader.Terminate();

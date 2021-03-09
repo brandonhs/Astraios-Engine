@@ -94,4 +94,12 @@ public class Texture {
 		glBindTexture(GL_TEXTURE_2D, texID);
 	}
 	
+	/**
+	 * Unbind the texture
+	 * 
+	 */
+	public void unbind() {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	
 }

@@ -30,6 +30,8 @@ public class Renderer {
 			glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount());
 		}
 		glBindVertexArray(0);
+		
+		instance.postRender();
 	}
 	
 }

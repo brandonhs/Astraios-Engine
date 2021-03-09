@@ -3,9 +3,11 @@ package com.therealjoe24.skygl;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.opengl.GL15;
+import static org.lwjgl.opengl.GL45.*;
 
 import static org.lwjgl.system.MemoryUtil.*;
 
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 
 /**
@@ -30,6 +32,12 @@ public class Display {
 	private static String _title;
 	/* window color */
 	private static float[] _clearColor = { 0, 0, 0 };
+	
+	private static void _resizeCallback(int width, int height) {
+		_width = width;
+		_height = height;
+		glViewport(0, 0, width, height);
+	}
 	
 	/**
 	 * Gets the window id
@@ -75,7 +83,7 @@ public class Display {
 	 * @param title the title of the window
 	 * @throws RuntimeException
 	 */
-	public static void Create(int width, int height, String title) {
+	public static void Create(int width, int height, String title, boolean maximized) {
 		_width = width;
 		_height = height;
 		_title = title;
@@ -103,7 +111,18 @@ public class Display {
 		_windowID = glfwCreateWindow(width, height, title, NULL, NULL);
 		glfwMakeContextCurrent(_windowID);
 		
+		if (maximized) {
+			glfwMaximizeWindow(_windowID);
+		}
+		
 		GL.createCapabilities();
+		
+		glfwSetWindowSizeCallback(_windowID, new GLFWWindowSizeCallback() {
+			@Override
+			public void invoke(long window, int width, int height) {
+				_resizeCallback(width, height);
+			}
+		});
 	}
 	
 	/**
