@@ -3,7 +3,9 @@ package com.therealjoe24.skygl.renderer;
 import static org.lwjgl.opengl.GL45.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -43,7 +45,11 @@ public class ShaderObject {
 	public static String LoadSource(String path) {
 		String source = "";
 		try {
-			File file = new File(path);
+			InputStream file = ShaderObject.class.getResourceAsStream("/res/" + path);
+	        if (file == null) {
+	            // this is how we load file within editor (eg eclipse)
+	            file = ShaderObject.class.getClassLoader().getResourceAsStream(path);
+	        }
 			Scanner reader = new Scanner(file);
 			while (reader.hasNextLine()) {
 				source += reader.nextLine()+"\n";

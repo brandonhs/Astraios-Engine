@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL45.*;
 
 import static org.lwjgl.system.MemoryUtil.*;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 
@@ -74,6 +75,15 @@ public class Display {
 	public static String getTitle() {
 		return _title;
 	}
+	
+	/**
+	 * Gets the aspect ratio
+	 * 
+	 * @return aspect ratio
+	 */
+	public static float getAspect() {
+		return (float)_width/(float)_height;
+	}
 
 	/** 
 	 * Initializes Display
@@ -110,6 +120,9 @@ public class Display {
 		glfwWindowHint(GLFW_VERSION_MAJOR, 5);
 		_windowID = glfwCreateWindow(width, height, title, NULL, NULL);
 		glfwMakeContextCurrent(_windowID);
+		glfwSwapInterval(1);
+		
+		// glfwSetInputMode(_windowID, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		
 		if (maximized) {
 			glfwMaximizeWindow(_windowID);

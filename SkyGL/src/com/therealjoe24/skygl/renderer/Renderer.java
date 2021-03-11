@@ -2,6 +2,9 @@ package com.therealjoe24.skygl.renderer;
 
 import static org.lwjgl.opengl.GL45.*;
 
+import com.therealjoe24.skygl.camera.PerspectiveCamera;
+import com.therealjoe24.skygl.objects.Model;
+
 /**
  * Renderer
  * 
@@ -16,7 +19,7 @@ public class Renderer {
 	 * Render mesh
 	 * 
 	 * @param instance instance of shader
-	 * @param mesh mesh object
+	 * @param mesh mesh object to render
 	 */
 	public void RenderMesh(ShaderInstance instance, PrimitiveMesh mesh) {
 		glBindVertexArray(mesh.getVAO());
@@ -32,6 +35,18 @@ public class Renderer {
 		glBindVertexArray(0);
 		
 		instance.postRender();
+	}
+	
+	/**
+	 * Render model
+	 * 
+	 * @param instance instance of shader
+	 * @param model model object to render
+	 */
+	public void RenderModel(ShaderInstance instance, Model model) {
+		instance.SetAuxUniform("uModelMatrix", model.getModelMatrix());
+		
+		RenderMesh(instance, model.getMesh());
 	}
 	
 }
