@@ -52,6 +52,13 @@ public class ShaderProgram {
 		return glGetUniformLocation(_program, name);
 	}
 	
+	/**
+	 * Gets the type of the uniform
+	 * EX. GL_FLOAT, GLOAT_FLOAT_VEC3
+	 * 
+	 * @param location location of the uniform
+	 * @return
+	 */
 	public int getUniformType(int location) {
 		IntBuffer size = BufferUtils.createIntBuffer(32);
 		IntBuffer type = BufferUtils.createIntBuffer(32);

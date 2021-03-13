@@ -1,4 +1,4 @@
-package com.therealjoe24.skygl.camera;
+package com.therealjoe24.skygl.renderer.camera;
 
 import java.nio.FloatBuffer;
 

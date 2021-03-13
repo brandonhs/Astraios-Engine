@@ -25,8 +25,8 @@ import java.util.Map;
 
 import org.lwjgl.BufferUtils;
 
-import com.therealjoe24.skygl.camera.PerspectiveCamera;
-import com.therealjoe24.skygl.texture.Texture;
+import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
+import com.therealjoe24.skygl.renderer.texture.Texture;
 
 public class ShaderInstance {
 
@@ -65,6 +65,7 @@ public class ShaderInstance {
 	 * 
 	 */
 	private void UpdateCamera() {
+		if (_camera == null) return;
 		FloatBuffer fb1 = BufferUtils.createFloatBuffer(16);
 		FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
 		try {

@@ -1,4 +1,4 @@
-package com.therealjoe24.skygl.texture;
+package com.therealjoe24.skygl.renderer.texture;
 
 import static org.lwjgl.opengl.GL45.*;
 
@@ -84,6 +84,16 @@ public class Texture {
 			e.printStackTrace();
 		}
 		return new Texture(w, h, buf);
+	}
+	
+	/**
+	 * Dispose the texture
+	 * 
+	 */
+	public void Dispose() {
+		glDeleteTextures(texID);
+		this.buf.clear();
+		this.buf = null;
 	}
 	
 	/**

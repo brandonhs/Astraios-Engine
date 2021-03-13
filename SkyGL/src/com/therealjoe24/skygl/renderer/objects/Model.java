@@ -1,4 +1,4 @@
-package com.therealjoe24.skygl.objects;
+package com.therealjoe24.skygl.renderer.objects;
 
 import java.io.File;
 import java.nio.FloatBuffer;

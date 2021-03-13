@@ -38,6 +38,25 @@ public class BufferLoader {
 	}
 	
 	/**
+	 * TODO: Remove redundant code
+	 */
+	public int CreateTextVAO() {
+		int vao = glCreateVertexArrays();
+		_vaos.add(vao);
+		glBindVertexArray(vao);
+		
+		int vbo = glCreateBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, 6*4*Float.BYTES, GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, false, 4*Float.BYTES, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+		
+		return vao;
+	}
+	
+	/**
 	 * Stores data in primitive mesh
 	 * 
 	 * @param positions
