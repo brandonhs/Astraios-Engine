@@ -7,6 +7,9 @@ import static org.lwjgl.opengl.GL45.*;
 
 import static org.lwjgl.system.MemoryUtil.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
@@ -33,6 +36,16 @@ public class Display {
 	private static String _title;
 	/* window color */
 	private static float[] _clearColor = { 0, 0, 0 };
+	
+	/**
+	 * Resize Callback
+	 * 
+	 */
+	public static abstract interface SkyGLDisplayResizeFunc {
+		public abstract void invoke();
+	}
+	
+	private static List<SkyGLDisplayResizeFunc> _resizeFuncs = new ArrayList<SkyGLDisplayResizeFunc>();
 	
 	private static void _resizeCallback(int width, int height) {
 		_width = width;
@@ -130,12 +143,23 @@ public class Display {
 		
 		GL.createCapabilities();
 		
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
+		
 		glfwSetWindowSizeCallback(_windowID, new GLFWWindowSizeCallback() {
 			@Override
 			public void invoke(long window, int width, int height) {
 				_resizeCallback(width, height);
+				
+				for (SkyGLDisplayResizeFunc func : _resizeFuncs) {
+					func.invoke();
+				}
 			}
 		});
+	}
+	
+	public static void AddResizeCallbackFunc(SkyGLDisplayResizeFunc func) {
+		_resizeFuncs.add(func);
 	}
 	
 	/**
