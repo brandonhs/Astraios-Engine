@@ -22,7 +22,7 @@ import org.lwjgl.glfw.*;
 /**
  * Input Handler
  * 
- * @author brand
+ * @author TheRealJoe24
  *
  */
 public class Input {

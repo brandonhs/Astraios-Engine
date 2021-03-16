@@ -28,9 +28,7 @@ import org.lwjgl.nanovg.NanoVG;
 /**
  * Canvas element for text rendering
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class TextElement extends CanvasElement {

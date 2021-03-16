@@ -47,9 +47,7 @@ import com.therealjoe24.skygl.renderer.texture.Texture;
 /**
  * Shader Instance class
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class ShaderInstance {

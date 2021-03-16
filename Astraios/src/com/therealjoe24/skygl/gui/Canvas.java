@@ -25,9 +25,7 @@ import org.lwjgl.nanovg.NanoVGGL3;
 /**
  * Stores individual elements
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class Canvas {

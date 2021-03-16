@@ -34,9 +34,8 @@ import org.lwjgl.opengl.GL;
 /**
  * Static Display class
  * 
- * @author Brandon Stevens
- * @author owner@therealjoe24.com
- * @author www.therealjoe24.com
+ * @author TheRealJoe24
+ * 
  */
 public class Display {
 	

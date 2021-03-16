@@ -27,9 +27,7 @@ import java.util.Scanner;
 /**
  * Shader Object Class
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class ShaderObject {

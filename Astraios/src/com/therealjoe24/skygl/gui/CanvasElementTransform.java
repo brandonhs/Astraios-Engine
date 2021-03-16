@@ -21,9 +21,7 @@ import org.joml.Vector2f;
 /**
  * The Transform of a canvas element
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class CanvasElementTransform {

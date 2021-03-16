@@ -39,8 +39,6 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 /**
  * Texture utils class
  * 
- * @author Brandon Stevens
- * @author owner@therealjoe24.com
  * @author TheRealJoe24
  *
  */

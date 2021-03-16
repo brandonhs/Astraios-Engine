@@ -41,9 +41,7 @@ import org.lwjgl.BufferUtils;
 /**
  * Allows loading buffers into a vao
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class BufferLoader {

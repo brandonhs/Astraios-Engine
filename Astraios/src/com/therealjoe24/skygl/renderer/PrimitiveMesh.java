@@ -19,9 +19,7 @@ package com.therealjoe24.skygl.renderer;
 /**
  * Stores the vao and mesh data of a mesh
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class PrimitiveMesh {

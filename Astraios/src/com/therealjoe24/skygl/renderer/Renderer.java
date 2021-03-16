@@ -26,9 +26,7 @@ import com.therealjoe24.skygl.renderer.objects.Model;
 /**
  * Renderer
  * 
- * @author Brandon Stevens
- * @author www.therealjoe24.com
- * @author owner@therealjoe24.com
+ * @author TheRealJoe24
  *
  */
 public class Renderer {

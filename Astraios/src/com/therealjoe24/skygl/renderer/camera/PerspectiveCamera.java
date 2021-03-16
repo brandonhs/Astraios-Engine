@@ -30,9 +30,7 @@ import com.therealjoe24.skygl.Display;
  * TODO: Refactor Code
  * TODO: Update aspect ratio on display resize
  * 
- * @author Brandon Stevens
  * @author TheRealJoe24
- * @author owner@therealjoe24.com
  */
 public class PerspectiveCamera {
 
