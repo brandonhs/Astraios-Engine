@@ -2,9 +2,10 @@ package com.therealjoe24.skygl.renderer;
 
 import static org.lwjgl.opengl.GL45.*;
 
+import com.therealjoe24.skygl.gui.Canvas;
+import com.therealjoe24.skygl.gui.elements.TextElement;
 import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
 import com.therealjoe24.skygl.renderer.objects.Model;
-import com.therealjoe24.skygl.renderer.text.TextElement;
 
 /**
  * Renderer
@@ -48,10 +49,6 @@ public class Renderer {
 		instance.SetAuxUniform("uModelMatrix", model.getModelMatrix());
 		
 		RenderMesh(instance, model.getMesh());
-	}
-	
-	public void RenderTextElement(TextElement te) {
-		
 	}
 	
 }

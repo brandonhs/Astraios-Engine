@@ -9,7 +9,10 @@ import org.joml.Vector3f;
 
 import com.therealjoe24.skygl.Display;
 import com.therealjoe24.skygl.Input;
+import com.therealjoe24.skygl.gui.Canvas;
+import com.therealjoe24.skygl.gui.elements.TextElement;
 import com.therealjoe24.skygl.renderer.BufferLoader;
+import com.therealjoe24.skygl.renderer.MeshData;
 import com.therealjoe24.skygl.renderer.PrimitiveMesh;
 import com.therealjoe24.skygl.renderer.Renderer;
 import com.therealjoe24.skygl.renderer.ShaderInstance;
@@ -17,34 +20,16 @@ import com.therealjoe24.skygl.renderer.ShaderObject;
 import com.therealjoe24.skygl.renderer.ShaderProgram;
 import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
 import com.therealjoe24.skygl.renderer.objects.Model;
-import com.therealjoe24.skygl.renderer.text.TextElement;
 import com.therealjoe24.skygl.renderer.texture.Texture;
 
 public class Main {
-
-	static float[] positions = {
-			-1,  1, 0, 
-			-1, -1, 0, 
-			 1, -1, 0, 
-			 1,  1, 0,
-	};
-	
-	static float[] texturePositions = {
-			 0,  1, 
-			 0,  0, 
-			 1,  0, 
-			 1,  1
-	};
-	
-	static int[] indices = {
-			0, 1, 2,
-			2, 3, 0,
-	};
 	
 	public static void main(String[] args) {
-		Display.Create(512, 512, "Window", true);
+		/* Initialize the display and input manager */
+		Display.Create(512, 512, "SkyGL 3D Demo", true);
 		Input.Init();
 		
+		/* Load the shaders */
 		String vsSource = ShaderObject.LoadSource("shader.vert");
 		String fsSource = ShaderObject.LoadSource("shader.frag");
 		ShaderObject vs = new ShaderObject(GL_VERTEX_SHADER, vsSource);
@@ -57,20 +42,28 @@ public class Main {
 		
 		PerspectiveCamera camera = new PerspectiveCamera(
 				(float)Math.toRadians(45f), 0.0001f, 100000f, 
-				new Vector3f(0, 5, 5), 
+				new Vector3f(0, 0, 5), 
 				new Vector3f(0, 0, 0), 
 				new Vector3f(0, 1, 0));
 		
 		Texture texture = Texture.LoadTexture("res/wall.png");
 		
-		PrimitiveMesh mesh = loader.LoadToVAO(indices, positions, texturePositions);
+		Canvas canvas = new Canvas();
+		canvas.AddElement(new TextElement("SkyGL 3D Demo", 0.5f, 0.02f, 0, 1, 0, 1, 48));
+		canvas.AddElement(new TextElement("Made by TheRealJoe24", 0.8f, 0.02f, 0.1f, 0.1f, 0.8f, 1, 48));
+		TextElement el = new TextElement("", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
+		canvas.AddElement(el);
+		
+		PrimitiveMesh mesh = loader.LoadToVAO(new MeshData(texture, 1));
 		Model model = new Model(mesh);
 		ShaderInstance instance = new ShaderInstance(program);
 		
-		TextElement el = new TextElement(loader, "Text Rendering is Fun!", 512);
-		
-		instance.SetAuxUniform("uTexture", el.getTexture());
+		instance.SetAuxUniform("uTexture", texture);
 		instance.SetCamera(camera);
+		
+		double time, newTime, dt;
+		
+		time = System.currentTimeMillis();
 		
 		Display.setClearColor(0, 0, 0);
 		Display.ShowWindow();
@@ -78,14 +71,22 @@ public class Main {
 		while (!Display.windowShouldClose()) {
 			Display.ClearScreen();
 			
-			model.RotateY(0.01f);
+			model.RotateY(0.003f);
+			model.RotateX(0.02f);
 			renderer.RenderModel(instance, model);
+			
+			newTime = System.currentTimeMillis();
+			dt = newTime - time;
+			int fps = (int)Math.round(1/(dt/1000));
+			time = newTime;
+			el.SetText(String.format("fps: %d", fps));
+			
+			canvas.Render();
 			
 			Display.SwapBuffers();
 			
 			Input.Update();
 		}
-		
 		texture.Dispose();
 		loader.Terminate();
 		Display.Terminate();

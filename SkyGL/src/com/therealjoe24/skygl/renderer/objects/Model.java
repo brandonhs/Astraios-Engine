@@ -59,6 +59,10 @@ public class Model {
 		_modelMatrix.rotate(angle, 0, 1, 0);
 	}
 	
+	public void RotateX(float angle) {
+		_modelMatrix.rotate(angle, 1, 0, 0);
+	}
+	
 	/**
 	 * Get the primitive mesh data
 	 * 

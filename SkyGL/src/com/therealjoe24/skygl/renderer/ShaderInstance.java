@@ -28,6 +28,14 @@ import org.lwjgl.BufferUtils;
 import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
 import com.therealjoe24.skygl.renderer.texture.Texture;
 
+/**
+ * Shader Instance class
+ * 
+ * @author Brandon Stevens
+ * @author www.therealjoe24.com
+ * @author owner@therealjoe24.com
+ *
+ */
 public class ShaderInstance {
 
 	private ShaderProgram _program;
@@ -135,6 +143,11 @@ public class ShaderInstance {
 				Object value = _auxValues.get(name);
 				if (value == null) continue;
 				try {
+					/**
+					 * Switches the GL type to set the uniform
+					 * TODO: allow for more types (EX. FloatBuffer) for use with compatible GL types
+					 * 
+					 */
 					switch (type) {
 						case GL_FLOAT:
 							glUniform1f(location, (float)value);
@@ -167,6 +180,7 @@ public class ShaderInstance {
 							break;
 					}
 				} catch (ClassCastException e) {
+					/* the value given was not compatible with the opengl type */
 					e.printStackTrace();
 				}
 			}
@@ -178,6 +192,7 @@ public class ShaderInstance {
 	}
 	
 	/**
+	 * Called after the frame has completed rendering
 	 * 
 	 */
 	public void postRender() {
@@ -186,6 +201,11 @@ public class ShaderInstance {
 		}
 	}
 	
+	/**
+	 * Gets the shader program id
+	 * 
+	 * @return program ID
+	 */
 	public ShaderProgram getShaderProgram() {
 		return _program;
 	}

@@ -1,6 +1,19 @@
 package com.therealjoe24.skygl.renderer;
 
-import static org.lwjgl.opengl.GL45.*;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
+import static org.lwjgl.opengl.GL45.glCreateBuffers;
+import static org.lwjgl.opengl.GL45.glCreateVertexArrays;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -38,22 +51,33 @@ public class BufferLoader {
 	}
 	
 	/**
-	 * TODO: Remove redundant code
+	 * Create primitive mesh from data object
+	 * 
+	 * @param data
+	 * @return
 	 */
-	public int CreateTextVAO() {
-		int vao = glCreateVertexArrays();
-		_vaos.add(vao);
-		glBindVertexArray(vao);
+	public PrimitiveMesh LoadToVAO(MeshData data) {
+		float[] positions = data.getVertices();
+		float[] texturePositions = data.getUvs();
+		int  [] indices = data.getIndices();
 		
-		int vbo = glCreateBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, 6*4*Float.BYTES, GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, false, 4*Float.BYTES, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		/* position data must be set */
+		if (positions == null) return null;
 		
-		return vao;
+		PrimitiveMesh mesh = null;
+		
+		if (indices != null) {
+			/* TODO: allow texture positions to be set separately from indices */
+			if (texturePositions != null) {
+				mesh = LoadToVAO(indices, positions, texturePositions);
+			} else {
+				mesh = LoadToVAO(indices, positions);
+			}
+		} else {
+			mesh = LoadToVAO(positions);
+		}
+		
+		return mesh;
 	}
 	
 	/**
