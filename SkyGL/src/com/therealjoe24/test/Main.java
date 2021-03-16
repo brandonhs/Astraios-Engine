@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
 import java.util.Arrays;
-
 import org.joml.Math;
 import org.joml.Vector3f;
 
@@ -26,9 +25,11 @@ import com.therealjoe24.skygl.renderer.texture.Texture;
 public class Main {
 	
 	public static void main(String[] args) {
-		Display.Create(512, 512, "Window", true);
+		/* Initialize the display and input manager */
+		Display.Create(512, 512, "SkyGL 3D Demo", true);
 		Input.Init();
 		
+		/* Load the shaders */
 		String vsSource = ShaderObject.LoadSource("shader.vert");
 		String fsSource = ShaderObject.LoadSource("shader.frag");
 		ShaderObject vs = new ShaderObject(GL_VERTEX_SHADER, vsSource);
@@ -41,15 +42,17 @@ public class Main {
 		
 		PerspectiveCamera camera = new PerspectiveCamera(
 				(float)Math.toRadians(45f), 0.0001f, 100000f, 
-				new Vector3f(0, 5, 5), 
+				new Vector3f(0, 0, 5), 
 				new Vector3f(0, 0, 0), 
 				new Vector3f(0, 1, 0));
 		
-		Texture texture = Texture.LoadTexture("C:/users/brand/Downloads/ollie.png");
+		Texture texture = Texture.LoadTexture("res/wall.png");
 		
-		Canvas canvas = new Canvas(loader);
-		TextElement el = new TextElement("Ollie is cute :)", 50, 50);
-		canvas.AddElement(loader, el);
+		Canvas canvas = new Canvas();
+		canvas.AddElement(new TextElement("SkyGL 3D Demo", 0.5f, 0.02f, 0, 1, 0, 1, 48));
+		canvas.AddElement(new TextElement("Made by TheRealJoe24", 0.8f, 0.02f, 0.1f, 0.1f, 0.8f, 1, 48));
+		TextElement el = new TextElement("", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
+		canvas.AddElement(el);
 		
 		PrimitiveMesh mesh = loader.LoadToVAO(new MeshData(texture, 1));
 		Model model = new Model(mesh);
@@ -58,23 +61,32 @@ public class Main {
 		instance.SetAuxUniform("uTexture", texture);
 		instance.SetCamera(camera);
 		
+		double time, newTime, dt;
+		
+		time = System.currentTimeMillis();
+		
 		Display.setClearColor(0, 0, 0);
 		Display.ShowWindow();
 		
 		while (!Display.windowShouldClose()) {
 			Display.ClearScreen();
 			
-			model.RotateY(0.05f);
+			model.RotateY(0.003f);
+			model.RotateX(0.02f);
 			renderer.RenderModel(instance, model);
 			
-			renderer.RenderCanvas(canvas);
+			newTime = System.currentTimeMillis();
+			dt = newTime - time;
+			int fps = (int)Math.round(1/(dt/1000));
+			time = newTime;
+			el.SetText(String.format("fps: %d", fps));
+			
+			canvas.Render();
 			
 			Display.SwapBuffers();
 			
 			Input.Update();
 		}
-		
-		canvas.Dispose();
 		texture.Dispose();
 		loader.Terminate();
 		Display.Terminate();

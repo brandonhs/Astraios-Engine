@@ -71,6 +71,5 @@ public class MeshData {
 	public float[] getUvs() {
 		return _uvs;
 	}
-	
 
 }

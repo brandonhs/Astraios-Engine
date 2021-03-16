@@ -9,8 +9,12 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
+ * Shader Object Class
  * 
- * @author brand
+ * @author Brandon Stevens
+ * @author www.therealjoe24.com
+ * @author owner@therealjoe24.com
+ *
  */
 public class ShaderObject {
 
@@ -64,7 +68,7 @@ public class ShaderObject {
 	/**
 	 * Get the shader id
 	 * 
-	 * @return
+	 * @return shader id
 	 */
 	public int getShader() {
 		return _shader;

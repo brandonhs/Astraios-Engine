@@ -1,60 +1,112 @@
 package com.therealjoe24.skygl.gui.elements;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
-import javax.imageio.ImageIO;
-
-import org.lwjgl.BufferUtils;
-
+import com.therealjoe24.skygl.Display;
 import com.therealjoe24.skygl.gui.CanvasElement;
-import com.therealjoe24.skygl.renderer.BufferLoader;
-import com.therealjoe24.skygl.renderer.texture.Texture;
+import com.therealjoe24.skygl.renderer.ShaderObject;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVG;
 
 /**
+ * Canvas element for text rendering
  * 
- * @author brand
+ * @author Brandon Stevens
+ * @author www.therealjoe24.com
+ * @author owner@therealjoe24.com
  *
  */
 public class TextElement extends CanvasElement {
 	
-	private String _text;
-	
 	/**
-	 * Create text element
-	 * 
-	 * @param loader
-	 * @param text
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * Name of the font
 	 */
-	public TextElement(String text, int x, int y) {
-		super(x, y);
+	public static final String FONT_NAME = "BOLD";
+	/**
+	 * internal text data
+	 */
+	private String _text;
+	/**
+	 * color buffer
+	 */
+	private NVGColor _col;
+	/**
+	 * size of font in pixels
+	 */
+	private float _fontSize;
+	/**
+	 * font id
+	 */
+	private int _font;
+
+	/**
+	 * Create Text Element
+	 * 
+	 * @param text text to display
+	 * @param nx normalized x position
+	 * @param ny normalized y position
+	 * @param r red component
+	 * @param g green component
+	 * @param b blue component
+	 * @param a transparency component
+	 * @param fontSize font size in pixels
+	 */
+	public TextElement(String text, float nx, float ny, float r, float g, float b, float a, float fontSize) {
+		super(nx, ny);
+		
 		_text = text;
+		_fontSize = fontSize;
+		
+		/* create color buffer and store color data */
+		_col = NVGColor.create();
+		_col.r(r);
+		_col.g(g);
+		_col.b(b);
+		_col.a(a);
 	}
 	
-	@Override
-	public void RenderToCanvas(Graphics2D g) {
-		g.setFont(new Font("asdf", 0, 24));
-		g.setColor(Color.white);
-		g.drawString(_text, _transform.getPosition().x, _transform.getPosition().y);
+	public void SetText(String text) {
+		_text = text;
 	}
 
 	@Override
-	public void OnRender() { }
-	
+	public void InitFromContext(long vg) {
+		_font = CreateFont(vg);
+	}
+
+	@Override
+	public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
+		NanoVG.nvgFontFace(vg, "BOLD");
+		NanoVG.nvgTextAlign(vg, 10);
+		//float fontSize = _fontSize*(float)frameWidth/(float)Display.getMaxWidth();
+		NanoVG.nvgFontSize(vg, _fontSize);
+		NanoVG.nvgFillColor(vg, _col);
+		NanoVG.nvgText(vg, (_transform.getPosition()).x * frameWidth,
+				(_transform.getPosition()).y * frameHeight, _text);
+	}
+
+	/**
+	 * Create a font
+	 * 
+	 * @param vg
+	 * @return integer id of font
+	 */
+	static int CreateFont(long vg) {
+		int font = -1;
+		try {
+			InputStream file = TextElement.class.getResourceAsStream("/res/OpenSans-Bold.ttf");
+			if (file == null)
+				// We are in IDE
+				file = TextElement.class.getClassLoader().getResourceAsStream("OpenSans-Bold.ttf");
+			byte[] data = file.readAllBytes();
+			ByteBuffer buf = BufferUtils.createByteBuffer(data.length);
+			buf.put(data);
+			buf.flip();
+			font = NanoVG.nvgCreateFontMem(vg, FONT_NAME, buf, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return font;
+	}
 }

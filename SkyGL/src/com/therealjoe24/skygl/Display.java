@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 
@@ -23,18 +24,29 @@ import org.lwjgl.opengl.GL;
  */
 public class Display {
 	
-	/* has the display already been initialized? */
+	/**
+	 * True if the display has already been initialized
+	 */
 	private static boolean _initialized = false;
-	
-	/* glfw window id */
+	/**
+	 * GLFW window ID
+	 */
 	private static long _windowID = NULL;
-	/* window width */
+	/**
+	 * window width
+	 */
 	private static int _width;
-	/* window height */
+	/**
+	 * window height
+	 */
 	private static int _height;
-	/* the window title */
+	/**
+	 * window title
+	 */
 	private static String _title;
-	/* window color */
+	/**
+	 * window clear color
+	 */
 	private static float[] _clearColor = { 0, 0, 0 };
 	
 	/**
@@ -47,6 +59,12 @@ public class Display {
 	
 	private static List<SkyGLDisplayResizeFunc> _resizeFuncs = new ArrayList<SkyGLDisplayResizeFunc>();
 	
+	/**
+	 * Called when the window is resized
+	 * 
+	 * @param width
+	 * @param height
+	 */
 	private static void _resizeCallback(int width, int height) {
 		_width = width;
 		_height = height;
@@ -129,6 +147,7 @@ public class Display {
 		
 		glfwDefaultWindowHints();
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_VERSION_MAJOR, 5);
 		_windowID = glfwCreateWindow(width, height, title, NULL, NULL);
@@ -158,6 +177,11 @@ public class Display {
 		});
 	}
 	
+	/**
+	 * Add callback function to resize event
+	 * 
+	 * @param func function to call on resize
+	 */
 	public static void AddResizeCallbackFunc(SkyGLDisplayResizeFunc func) {
 		_resizeFuncs.add(func);
 	}
@@ -227,6 +251,26 @@ public class Display {
 	 */
 	public static boolean windowShouldClose() {
 		return glfwWindowShouldClose(_windowID);
+	}
+	
+	/**
+	 * Get the monitor width
+	 * 
+	 * @return monitor width
+	 */
+	public static int getMaxWidth() {
+		GLFWVidMode mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		return mode.width();
+	}
+	
+	/**
+	 * Get the monitor height
+	 * 
+	 * @return monitor height
+	 */
+	public static int getMaxHeight() {
+		GLFWVidMode mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		return mode.height();
 	}
 	
 }

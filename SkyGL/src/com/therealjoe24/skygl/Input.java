@@ -11,8 +11,15 @@ import org.lwjgl.glfw.*;
  */
 public class Input {
 	
+	/**
+	 * mouse data
+	 */
 	private static double _mouseX, _mouseY, _deltaMouseX, _deltaMouseY;
 	
+	/**
+	 * Callback function for the cursor position change
+	 * 
+	 */
 	private static GLFWCursorPosCallback _cursorPosCallback = new GLFWCursorPosCallback() {
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
@@ -49,6 +56,10 @@ public class Input {
 		glfwSetCursorPosCallback(Display.getWindowID(), _cursorPosCallback);
 	}
 	
+	/**
+	 * Update the Input Manager
+	 * 
+	 */
 	public static void Update() {
 		glfwPollEvents();
 		_deltaMouseX = 0;

@@ -51,8 +51,4 @@ public class Renderer {
 		RenderMesh(instance, model.getMesh());
 	}
 	
-	public void RenderCanvas(Canvas canvas) {
-		RenderMesh(canvas.getShaderInstance(), canvas.getQuad());
-	}
-	
 }

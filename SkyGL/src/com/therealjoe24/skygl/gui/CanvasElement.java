@@ -1,9 +1,6 @@
 package com.therealjoe24.skygl.gui;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import org.joml.Vector2i;
+import org.joml.Vector2f;
 
 /**
  * Base class for canvas elements
@@ -14,28 +11,36 @@ import org.joml.Vector2i;
  *
  */
 public abstract class CanvasElement {
-
-	protected CanvasElementTransform _transform;
 	
+	/**
+	 * canvas element transform
+	 */
+	protected CanvasElementTransform _transform;
+
 	/**
 	 * Create base canvas element
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * @param nx
+	 * @param ny
 	 */
-	public CanvasElement(int x, int y) {
-		_transform = new CanvasElementTransform(new Vector2i(x, y));
+	public CanvasElement(float nx, float ny) {
+		_transform = new CanvasElementTransform(new Vector2f(nx, ny));
 	}
-	
+
 	/**
-	 * Render Element to canvas graphic
+	 * Initialize the element from render context
 	 * 
-	 * @param g
+	 * @param vg
 	 */
-	public abstract void RenderToCanvas(Graphics2D g);
-	
-	public abstract void OnRender();
+	public abstract void InitFromContext(long vg);
+
+	/**
+	 * Render the element to the render context
+	 * 
+	 * @param frameWidth
+	 * @param frameHeight
+	 * @param vg
+	 */
+	public abstract void RenderToCanvas(int frameWidth, int frameHeight, long vg);
 	
 }
