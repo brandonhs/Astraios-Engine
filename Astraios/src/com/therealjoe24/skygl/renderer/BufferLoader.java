@@ -39,7 +39,7 @@ import java.util.List;
 import org.lwjgl.BufferUtils;
 
 /**
- * Allows loading buffers into a vao
+ * Utility for loading data into a mesh
  * 
  * @author TheRealJoe24
  *
@@ -52,7 +52,7 @@ public class BufferLoader {
     private List<Integer> _vbos = new ArrayList<Integer>();
 
     /**
-     * Destroy all buffers
+     * Deallocate loaded buffers
      * 
      */
     public void Terminate() {
@@ -98,7 +98,7 @@ public class BufferLoader {
     /**
      * Stores data in primitive mesh
      * 
-     * @param positions
+     * @param positions position data to store
      * @return primitive mesh
      */
     public PrimitiveMesh LoadToVAO(float[] positions) {
@@ -115,8 +115,8 @@ public class BufferLoader {
     /**
      * Stores data in primitive mesh
      * 
-     * @param positions
-     * @param indices
+     * @param positions position data to store
+     * @param indices index data to store
      * @return primitive mesh
      */
     public PrimitiveMesh LoadToVAO(int[] indices, float[] positions) {
@@ -134,8 +134,9 @@ public class BufferLoader {
     /**
      * Stores data in primitive mesh
      * 
-     * @param positions
-     * @param indices
+     * @param positions position data to store
+     * @param indices index data to store
+     * @param texturePositions uv coordinates to store
      * @return primitive mesh
      */
     public PrimitiveMesh LoadToVAO(int[] indices, float[] positions, float[] texturePositions) {
@@ -154,7 +155,7 @@ public class BufferLoader {
     /**
      * Stores indices in GL_ELEMENT_ARRAY_BUFFER
      * 
-     * @param data
+     * @param data index data to store
      */
     public void bindIndicesBuffer(int[] data) {
         int vbo = glCreateBuffers();
@@ -171,9 +172,9 @@ public class BufferLoader {
     /**
      * Stores float data in vbo
      * 
-     * @param index
-     * @param data
-     * @param numComponents
+     * @param index index of attribute
+     * @param data float data to store
+     * @param numComponents number of componenets per vertex
      */
     public void storeInAttribute(int index, float[] data, int numComponents) {
         int vbo = glCreateBuffers();
@@ -190,11 +191,11 @@ public class BufferLoader {
     }
 
     /**
-     * Stores float data in vbo
+     * Stores integer data in vbo
      * 
-     * @param index
-     * @param data
-     * @param numComponents
+     * @param index index of attribute
+     * @param data int data to store
+     * @param numComponents number of componenets per vertex
      */
     public void storeInAttribute(int index, int[] data, int numComponents) {
         int vbo = glCreateBuffers();
