@@ -13,11 +13,8 @@ Astraios is a lighweight game engine built from the ground up using lwjgl3.
 
 ## Getting Started
 
-Get a local copy of the repository with
+Get a local copy of the repository with `git clone https://github.com/TheRealJoe24/Astraios.git`
 
-```
-git clone https://github.com/TheRealJoe24/Astraios.git
-```
 
 ### Prerequisites
 
@@ -59,7 +56,7 @@ Distributed under the GNU GPL v3.0 License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - owner@threaljoe24.com
+TheRealJoe24 - owner@threaljoe24.com
 
 Project Link: [https://github.com/TheRealJoe24/Astraios](https://github.com/TheRealJoe24/Astraios)
 
