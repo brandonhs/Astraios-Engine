@@ -4,7 +4,7 @@
 
 ## About The Project
 
-Astraios is a lighweight game engine built from the ground up using lwjgl3.
+Astraios (əˈstriːəs) is a lighweight game engine built from the ground up using lwjgl3.
 
 ### Built With
 
