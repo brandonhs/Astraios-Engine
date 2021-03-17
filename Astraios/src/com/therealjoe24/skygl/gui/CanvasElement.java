@@ -25,36 +25,36 @@ import org.joml.Vector2f;
  *
  */
 public abstract class CanvasElement {
-	
-	/**
-	 * canvas element transform
-	 */
-	protected CanvasElementTransform _transform;
 
-	/**
-	 * Create base canvas element
-	 * 
-	 * @param nx
-	 * @param ny
-	 */
-	public CanvasElement(float nx, float ny) {
-		_transform = new CanvasElementTransform(new Vector2f(nx, ny));
-	}
+    /**
+     * canvas element transform
+     */
+    protected CanvasElementTransform _transform;
 
-	/**
-	 * Initialize the element from render context
-	 * 
-	 * @param vg
-	 */
-	public abstract void InitFromContext(long vg);
+    /**
+     * Create base canvas element
+     * 
+     * @param nx
+     * @param ny
+     */
+    public CanvasElement(float nx, float ny) {
+        _transform = new CanvasElementTransform(new Vector2f(nx, ny));
+    }
 
-	/**
-	 * Render the element to the render context
-	 * 
-	 * @param frameWidth
-	 * @param frameHeight
-	 * @param vg
-	 */
-	public abstract void RenderToCanvas(int frameWidth, int frameHeight, long vg);
-	
+    /**
+     * Initialize the element from render context
+     * 
+     * @param vg
+     */
+    public abstract void InitFromContext(long vg);
+
+    /**
+     * Render the element to the render context
+     * 
+     * @param frameWidth
+     * @param frameHeight
+     * @param vg
+     */
+    public abstract void RenderToCanvas(int frameWidth, int frameHeight, long vg);
+
 }

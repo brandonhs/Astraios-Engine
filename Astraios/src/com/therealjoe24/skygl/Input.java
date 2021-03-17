@@ -26,60 +26,60 @@ import org.lwjgl.glfw.*;
  *
  */
 public class Input {
-	
-	/**
-	 * mouse data
-	 */
-	private static double _mouseX, _mouseY, _deltaMouseX, _deltaMouseY;
-	
-	/**
-	 * Callback function for the cursor position change
-	 * 
-	 */
-	private static GLFWCursorPosCallback _cursorPosCallback = new GLFWCursorPosCallback() {
-		@Override
-		public void invoke(long window, double xpos, double ypos) {
-			_deltaMouseX = xpos-_mouseX;
-			_deltaMouseY = ypos-_mouseY;
-			_mouseX = xpos;
-			_mouseY = ypos;
-		}
-	};
-	
-	/**
-	 * Get the mouse delta x
-	 * 
-	 * @return
-	 */
-	public static float getMouseDeltaX() {
-		return (float)_deltaMouseX;
-	}
-	
-	/**
-	 * Get the mouse delta y
-	 * 
-	 * @return
-	 */
-	public static float getMouseDeltaY() {
-		return (float)_deltaMouseY;
-	}
-	
-	/**
-	 * Initialize Input Manager
-	 * 
-	 */
-	public static void Init() {
-		glfwSetCursorPosCallback(Display.getWindowID(), _cursorPosCallback);
-	}
-	
-	/**
-	 * Update the Input Manager
-	 * 
-	 */
-	public static void Update() {
-		glfwPollEvents();
-		_deltaMouseX = 0;
-		_deltaMouseY = 0;
-	}
-	
+
+    /**
+     * mouse data
+     */
+    private static double _mouseX, _mouseY, _deltaMouseX, _deltaMouseY;
+
+    /**
+     * Callback function for the cursor position change
+     * 
+     */
+    private static GLFWCursorPosCallback _cursorPosCallback = new GLFWCursorPosCallback() {
+        @Override
+        public void invoke(long window, double xpos, double ypos) {
+            _deltaMouseX = xpos - _mouseX;
+            _deltaMouseY = ypos - _mouseY;
+            _mouseX = xpos;
+            _mouseY = ypos;
+        }
+    };
+
+    /**
+     * Get the mouse delta x
+     * 
+     * @return
+     */
+    public static float getMouseDeltaX() {
+        return (float) _deltaMouseX;
+    }
+
+    /**
+     * Get the mouse delta y
+     * 
+     * @return
+     */
+    public static float getMouseDeltaY() {
+        return (float) _deltaMouseY;
+    }
+
+    /**
+     * Initialize Input Manager
+     * 
+     */
+    public static void Init() {
+        glfwSetCursorPosCallback(Display.getWindowID(), _cursorPosCallback);
+    }
+
+    /**
+     * Update the Input Manager
+     * 
+     */
+    public static void Update() {
+        glfwPollEvents();
+        _deltaMouseX = 0;
+        _deltaMouseY = 0;
+    }
+
 }

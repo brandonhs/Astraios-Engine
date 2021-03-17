@@ -43,87 +43,87 @@ import de.matthiasmann.twl.utils.PNGDecoder;
  *
  */
 public class Texture {
-	
-	private int texID;
-	
-	public int width, height;
-	public ByteBuffer buf;
-	
-	/**
-	 * Initialize texture object
-	 * 
-	 * @param w the image width
-	 * @param h the image height
-	 * @param buf the byte buffer to be stored
-	 */
-	public Texture(int w, int h, ByteBuffer buf) {
-		width = w;
-		height = h;
-		this.buf = buf;
-		
-		texID = glCreateTextures(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texID);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this.buf);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	
-	/**
-	 * Load the texture into a texture object
-	 * 
-	 * @param path path to png
-	 * @return Texture object with loaded data
-	 */
-	public static Texture LoadTexture(String path) {
-		ByteBuffer buf = null;
-		int w = 0;
-		int h = 0;
-		try {
-			InputStream in = new FileInputStream(path);
-			
-			PNGDecoder decoder = new PNGDecoder(in);
-			w = decoder.getWidth();
-			h = decoder.getHeight();
-			buf = ByteBuffer.allocateDirect(4*w*h);
-			decoder.decodeFlipped(buf, w*4, PNGDecoder.Format.RGBA);
-			buf.flip();
-			
-			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new Texture(w, h, buf);
-	}
-	
-	/**
-	 * Dispose the texture
-	 * 
-	 */
-	public void Dispose() {
-		glDeleteTextures(texID);
-		this.buf.clear();
-		this.buf = null;
-	}
-	
-	/**
-	 * Bind the texture
-	 * 
-	 */
-	public void bind() {
-		glBindTexture(GL_TEXTURE_2D, texID);
-	}
-	
-	/**
-	 * Unbind the texture
-	 * 
-	 */
-	public void unbind() {
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	
+
+    private int texID;
+
+    public int width, height;
+    public ByteBuffer buf;
+
+    /**
+     * Initialize texture object
+     * 
+     * @param w   the image width
+     * @param h   the image height
+     * @param buf the byte buffer to be stored
+     */
+    public Texture(int w, int h, ByteBuffer buf) {
+        width = w;
+        height = h;
+        this.buf = buf;
+
+        texID = glCreateTextures(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texID);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this.buf);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    /**
+     * Load the texture into a texture object
+     * 
+     * @param path path to png
+     * @return Texture object with loaded data
+     */
+    public static Texture LoadTexture(String path) {
+        ByteBuffer buf = null;
+        int w = 0;
+        int h = 0;
+        try {
+            InputStream in = new FileInputStream(path);
+
+            PNGDecoder decoder = new PNGDecoder(in);
+            w = decoder.getWidth();
+            h = decoder.getHeight();
+            buf = ByteBuffer.allocateDirect(4 * w * h);
+            decoder.decodeFlipped(buf, w * 4, PNGDecoder.Format.RGBA);
+            buf.flip();
+
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Texture(w, h, buf);
+    }
+
+    /**
+     * Dispose the texture
+     * 
+     */
+    public void Dispose() {
+        glDeleteTextures(texID);
+        this.buf.clear();
+        this.buf = null;
+    }
+
+    /**
+     * Bind the texture
+     * 
+     */
+    public void bind() {
+        glBindTexture(GL_TEXTURE_2D, texID);
+    }
+
+    /**
+     * Unbind the texture
+     * 
+     */
+    public void unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
 }

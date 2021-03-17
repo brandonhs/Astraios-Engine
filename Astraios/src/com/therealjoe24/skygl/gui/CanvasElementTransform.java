@@ -25,25 +25,25 @@ import org.joml.Vector2f;
  *
  */
 public class CanvasElementTransform {
-	
-	private Vector2f _position;
 
-	/**
-	 * Create an element transform
-	 * 
-	 * @param position
-	 */
-	public CanvasElementTransform(Vector2f position) {
-		_position = position;
-	}
+    private Vector2f _position;
 
-	/**
-	 * get the position
-	 * 
-	 * @return position
-	 */
-	public Vector2f getPosition() {
-		return new Vector2f(_position);
-	}
-	
+    /**
+     * Create an element transform
+     * 
+     * @param position
+     */
+    public CanvasElementTransform(Vector2f position) {
+        _position = position;
+    }
+
+    /**
+     * get the position
+     * 
+     * @return position
+     */
+    public Vector2f getPosition() {
+        return new Vector2f(_position);
+    }
+
 }
