@@ -43,7 +43,7 @@ public class Main {
 
     public static void main(String[] args) {
         /* Initialize the display and input manager */
-        Display.Create(512, 512, "SkyGL 3D Demo", true);
+        Display.Create(512, 512, "Astraios 3D Demo", true);
         Input.Init();
 
         /* Load the shaders */
@@ -63,9 +63,9 @@ public class Main {
         Texture texture = Texture.LoadTexture("res/wall.png");
 
         Canvas canvas = new Canvas();
-        canvas.AddElement(new TextElement("SkyGL 3D Demo", 0.5f, 0.02f, 0, 1, 0, 1, 48));
+        canvas.AddElement(new TextElement("Astraios 3D Demo", 0.5f, 0.02f, 0, 1, 0, 1, 48));
         canvas.AddElement(new TextElement("Made by TheRealJoe24", 0.8f, 0.02f, 0.1f, 0.1f, 0.8f, 1, 48));
-        TextElement el = new TextElement("", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
+        TextElement el = new TextElement("fps: 0", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
         canvas.AddElement(el);
 
         PrimitiveMesh mesh = loader.LoadToVAO(new MeshData(texture, 1));
