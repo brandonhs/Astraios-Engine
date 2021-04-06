@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl;
+package com.therealjoe24.astraios;
 
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.*;

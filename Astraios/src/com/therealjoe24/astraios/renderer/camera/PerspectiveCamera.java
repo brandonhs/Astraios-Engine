@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.renderer.camera;
+package com.therealjoe24.astraios.renderer.camera;
 
 import java.nio.FloatBuffer;
 
@@ -23,7 +23,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
-import com.therealjoe24.skygl.Display;
+import com.therealjoe24.astraios.Display;
 
 /**
  * Perspective Camera main class

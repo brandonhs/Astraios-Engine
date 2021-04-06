@@ -15,38 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.renderer;
+package com.therealjoe24.astraios.gui;
+
+import org.joml.Vector2f;
 
 /**
- * Stores the vao and mesh data of a mesh
+ * The Transform of a canvas element
  * 
  * @author TheRealJoe24
  *
  */
-public class PrimitiveMesh {
+public class CanvasElementTransform {
 
-    /* number of vertices */
-    private int _vertexCount;
-    /* vao */
-    private int _vao;
+    private Vector2f _position;
 
-    public int getVertexCount() {
-        return _vertexCount;
-    }
-
-    public int getVAO() {
-        return _vao;
+    /**
+     * Create an element transform
+     * 
+     * @param position
+     */
+    public CanvasElementTransform(Vector2f position) {
+        _position = position;
     }
 
     /**
-     * Instance of Primitive Mesh
+     * get the position
      * 
-     * @param vertexCount
-     * @param vao
+     * @return position
      */
-    public PrimitiveMesh(int vertexCount, int vao) {
-        _vertexCount = vertexCount;
-        _vao = vao;
+    public Vector2f getPosition() {
+        return new Vector2f(_position);
     }
 
 }

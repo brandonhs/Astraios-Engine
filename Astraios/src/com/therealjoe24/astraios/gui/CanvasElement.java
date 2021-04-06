@@ -15,61 +15,50 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.gui;
+package com.therealjoe24.astraios.gui;
 
-import com.therealjoe24.skygl.Display;
 import java.util.ArrayList;
 import java.util.List;
-import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.nanovg.NanoVGGL3;
+
+import org.joml.Vector2f;
 
 /**
- * Stores individual elements
+ * Base class for canvas elements
  * 
  * @author TheRealJoe24
  *
  */
-public class Canvas {
-
-    private List<CanvasElement> _elements = new ArrayList<>();
-
-    private int _width;
-    private int _height;
-    private long _vg;
+public abstract class CanvasElement {
 
     /**
-     * Create Canvas Object
-     * 
+     * canvas element transform
      */
-    public Canvas() {
-        Display.AddResizeCallbackFunc(new Display.SkyGLDisplayResizeFunc() {
-            public void invoke() {
-                _width = Display.getWidth();
-                _height = Display.getHeight();
-            }
-        });
-        _vg = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES);
+    protected CanvasElementTransform _transform;
+
+    /**
+     * Create base canvas element
+     * 
+     * @param nx
+     * @param ny
+     */
+    public CanvasElement(float nx, float ny) {
+        _transform = new CanvasElementTransform(new Vector2f(nx, ny));
     }
 
     /**
-     * Add new element to element list
+     * Initialize the element from render context
      * 
-     * @param el element to add
+     * @param vg
      */
-    public void AddElement(CanvasElement el) {
-        _elements.add(el);
-        el.InitFromContext(_vg);
-    }
+    public abstract void InitFromContext(long vg);
 
     /**
-     * Render the canvas
+     * Render the element to the render context
      * 
+     * @param frameWidth
+     * @param frameHeight
+     * @param vg
      */
-    public void Render() {
-        NanoVG.nvgBeginFrame(_vg, _width, _height, 1);
-        for (CanvasElement el : _elements)
-            el.RenderToCanvas(_width, _height, _vg);
-        NanoVG.nvgEndFrame(_vg);
-    }
+    public abstract void RenderToCanvas(int frameWidth, int frameHeight, long vg);
 
 }

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.renderer.objects;
+package com.therealjoe24.astraios.renderer.objects;
 
 import java.io.File;
 import java.nio.FloatBuffer;
@@ -23,7 +23,7 @@ import java.nio.FloatBuffer;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
-import com.therealjoe24.skygl.renderer.PrimitiveMesh;
+import com.therealjoe24.astraios.renderer.PrimitiveMesh;
 
 /**
  * Creates a Model

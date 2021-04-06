@@ -15,11 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.gui.elements;
+package com.therealjoe24.astraios.gui.elements;
 
-import com.therealjoe24.skygl.Display;
-import com.therealjoe24.skygl.gui.CanvasElement;
-import com.therealjoe24.skygl.renderer.ShaderObject;
+import com.therealjoe24.astraios.Display;
+import com.therealjoe24.astraios.gui.CanvasElement;
+import com.therealjoe24.astraios.renderer.ShaderObject;
+
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import org.lwjgl.BufferUtils;
@@ -110,10 +111,10 @@ public class TextElement extends CanvasElement {
     static int CreateFont(long vg) {
         int font = -1;
         try {
-            InputStream file = TextElement.class.getResourceAsStream("/res/OpenSans-Bold.ttf");
+            InputStream file = TextElement.class.getResourceAsStream("/res/JetBrainsMono-Regular.ttf");
             if (file == null)
                 // We are in IDE
-                file = TextElement.class.getClassLoader().getResourceAsStream("OpenSans-Bold.ttf");
+                file = TextElement.class.getClassLoader().getResourceAsStream("JetBrainsMono-Regular.ttf");
             byte[] data = file.readAllBytes();
             ByteBuffer buf = BufferUtils.createByteBuffer(data.length);
             buf.put(data);

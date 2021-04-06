@@ -24,20 +24,20 @@ import java.util.Arrays;
 import org.joml.Math;
 import org.joml.Vector3f;
 
-import com.therealjoe24.skygl.Display;
-import com.therealjoe24.skygl.Input;
-import com.therealjoe24.skygl.gui.Canvas;
-import com.therealjoe24.skygl.gui.elements.TextElement;
-import com.therealjoe24.skygl.renderer.BufferLoader;
-import com.therealjoe24.skygl.renderer.MeshData;
-import com.therealjoe24.skygl.renderer.PrimitiveMesh;
-import com.therealjoe24.skygl.renderer.Renderer;
-import com.therealjoe24.skygl.renderer.ShaderInstance;
-import com.therealjoe24.skygl.renderer.ShaderObject;
-import com.therealjoe24.skygl.renderer.ShaderProgram;
-import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
-import com.therealjoe24.skygl.renderer.objects.Model;
-import com.therealjoe24.skygl.renderer.texture.Texture;
+import com.therealjoe24.astraios.Display;
+import com.therealjoe24.astraios.Input;
+import com.therealjoe24.astraios.gui.Canvas;
+import com.therealjoe24.astraios.gui.elements.TextElement;
+import com.therealjoe24.astraios.renderer.BufferLoader;
+import com.therealjoe24.astraios.renderer.MeshData;
+import com.therealjoe24.astraios.renderer.PrimitiveMesh;
+import com.therealjoe24.astraios.renderer.Renderer;
+import com.therealjoe24.astraios.renderer.ShaderInstance;
+import com.therealjoe24.astraios.renderer.ShaderObject;
+import com.therealjoe24.astraios.renderer.ShaderProgram;
+import com.therealjoe24.astraios.renderer.camera.PerspectiveCamera;
+import com.therealjoe24.astraios.renderer.objects.Model;
+import com.therealjoe24.astraios.renderer.texture.Texture;
 
 public class Main {
 

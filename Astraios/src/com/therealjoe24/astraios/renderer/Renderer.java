@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.therealjoe24.skygl.renderer;
+package com.therealjoe24.astraios.renderer;
 
 import static org.lwjgl.opengl.GL45.*;
 
-import com.therealjoe24.skygl.gui.Canvas;
-import com.therealjoe24.skygl.gui.elements.TextElement;
-import com.therealjoe24.skygl.renderer.camera.PerspectiveCamera;
-import com.therealjoe24.skygl.renderer.objects.Model;
+import com.therealjoe24.astraios.gui.Canvas;
+import com.therealjoe24.astraios.gui.elements.TextElement;
+import com.therealjoe24.astraios.renderer.camera.PerspectiveCamera;
+import com.therealjoe24.astraios.renderer.objects.Model;
 
 /**
  * Renderer
