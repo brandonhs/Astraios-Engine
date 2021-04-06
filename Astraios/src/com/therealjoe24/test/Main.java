@@ -68,9 +68,10 @@ public class Main {
         TextElement el = new TextElement("fps: 0", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
         canvas.AddElement(el);
 
-        PrimitiveMesh mesh = loader.LoadToVAO(new MeshData(texture, 1));
-        Model model = new Model(mesh);
         ShaderInstance instance = new ShaderInstance(program);
+        PrimitiveMesh mesh = new PrimitiveMesh(loader, new MeshData(texture, 1));
+        Model model = new Model(mesh);
+        model.SetInstance(instance);
 
         instance.SetAuxUniform("uTexture", texture);
         instance.SetCamera(camera);
@@ -87,7 +88,7 @@ public class Main {
 
             model.RotateY(0.003f);
             model.RotateX(0.02f);
-            renderer.RenderModel(instance, model);
+            renderer.RenderModel(model);
 
             newTime = System.currentTimeMillis();
             dt = newTime - time;

@@ -48,5 +48,25 @@ public class PrimitiveMesh {
         _vertexCount = vertexCount;
         _vao = vao;
     }
+    
+    /**
+     * Create Primitive Mesh from other mesh
+     * 
+     * @param mesh
+     */
+    private PrimitiveMesh(PrimitiveMesh mesh) {
+        this._vao = mesh.getVAO();
+        this._vertexCount = mesh._vertexCount;
+    }
+
+    /**
+     * Create Primtive mesh
+     * 
+     * @param loader
+     * @param meshData
+     */
+    public PrimitiveMesh(BufferLoader loader, MeshData meshData) {
+        this(loader.LoadToVAO(meshData));
+    }
 
 }

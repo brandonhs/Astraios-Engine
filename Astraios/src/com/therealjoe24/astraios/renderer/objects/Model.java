@@ -24,6 +24,7 @@ import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
 import com.therealjoe24.astraios.renderer.PrimitiveMesh;
+import com.therealjoe24.astraios.renderer.ShaderInstance;
 
 /**
  * Creates a Model
@@ -37,6 +38,8 @@ public class Model {
     private PrimitiveMesh _mesh;
 
     private Matrix4f _modelMatrix;
+    
+    private ShaderInstance _instance;
 
     /**
      * Creates a model from an obj file
@@ -85,6 +88,32 @@ public class Model {
      */
     public PrimitiveMesh getMesh() {
         return _mesh;
+    }
+    
+    /**
+     * Gets the shader instance from the model for rendering
+     * 
+     */
+    public ShaderInstance getShaderInstance() {
+        return _instance;
+    }
+
+    /**
+     * Set the shader instance of the model
+     * 
+     * @param instance
+     */
+    public void SetInstance(ShaderInstance instance) {
+       _instance = instance;
+    }
+
+    /**
+     * Prepares the model for rendering
+     * 
+     */
+    public void PrepareInstance() {
+        if (_instance == null) return;
+        _instance.SetAuxUniform("uModelMatrix", getModelMatrix());
     }
 
 }

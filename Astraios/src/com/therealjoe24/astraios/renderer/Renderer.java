@@ -57,13 +57,18 @@ public class Renderer {
     /**
      * Render model
      * 
-     * @param instance instance of shader
-     * @param model    model object to render
+     * @param model model object to render
+     * 
+     * @apiNote Will throw RuntimeException if the model shader instance is a null reference
      */
-    public void RenderModel(ShaderInstance instance, Model model) {
-        instance.SetAuxUniform("uModelMatrix", model.getModelMatrix());
-
-        RenderMesh(instance, model.getMesh());
+    public void RenderModel(Model model) {
+        ShaderInstance instance = model.getShaderInstance();
+        if (instance == null) {
+            throw new RuntimeException("Renderer: Shader instance of model has not been set!");
+        } else {
+            model.PrepareInstance();
+            RenderMesh(instance, model.getMesh());
+        }
     }
 
 }
