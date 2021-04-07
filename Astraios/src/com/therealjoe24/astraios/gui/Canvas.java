@@ -19,6 +19,8 @@ package com.therealjoe24.astraios.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
@@ -30,12 +32,10 @@ import com.therealjoe24.astraios.Display;
  * @author TheRealJoe24
  *
  */
-public class Canvas {
-
-    private List<CanvasElement> _elements = new ArrayList<>();
-
-    private int _width;
-    private int _height;
+public class Canvas extends CanvasElement {
+    
+    private int _canvasWidth;
+    private int _canvasHeight;
     private long _vg;
 
     /**
@@ -43,10 +43,11 @@ public class Canvas {
      * 
      */
     public Canvas() {
+        super(0, 0, 1, 1);
         Display.AddResizeCallbackFunc(new Display.SkyGLDisplayResizeFunc() {
             public void invoke() {
-                _width = Display.getWidth();
-                _height = Display.getHeight();
+                _canvasWidth = Display.getWidth();
+                _canvasHeight = Display.getHeight();
             }
         });
         _vg = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES);
@@ -58,7 +59,7 @@ public class Canvas {
      * @param el element to add
      */
     public void AddElement(CanvasElement el) {
-        _elements.add(el);
+        AddChild(el);
         el.InitFromContext(_vg);
     }
 
@@ -67,10 +68,14 @@ public class Canvas {
      * 
      */
     public void Render() {
-        NanoVG.nvgBeginFrame(_vg, _width, _height, 1);
-        for (CanvasElement el : _elements)
-            el.RenderToCanvas(_width, _height, _vg);
+        NanoVG.nvgBeginFrame(_vg, _canvasWidth, _canvasHeight, 1);
+        RenderChildren(_canvasWidth, _canvasHeight, _vg);
         NanoVG.nvgEndFrame(_vg);
+    }
+
+    @Override
+    public void SendEvent(CanvasElementEvent evt) {
+        
     }
 
 }

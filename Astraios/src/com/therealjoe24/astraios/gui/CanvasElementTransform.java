@@ -28,6 +28,9 @@ import org.joml.Vector2f;
 public class CanvasElementTransform {
 
     private Vector2f _position;
+    private CanvasElementTransform _parent;
+    
+    private Vector2f _offset;
 
     /**
      * Create an element transform
@@ -35,7 +38,24 @@ public class CanvasElementTransform {
      * @param position
      */
     public CanvasElementTransform(Vector2f position) {
-        _position = position;
+        _position = new Vector2f(position);
+        _offset = new Vector2f(0);
+        _parent = null;
+    }
+    
+    public void SetParent(CanvasElementTransform parent) {
+        _parent = parent;
+    }
+    
+    /**
+     * Create an element transform
+     * 
+     * @param position
+     * @param parent
+     */
+    public CanvasElementTransform(Vector2f position, CanvasElementTransform parent) {
+        this(position);
+        _parent = parent;
     }
 
     /**
@@ -44,7 +64,24 @@ public class CanvasElementTransform {
      * @return position
      */
     public Vector2f getPosition() {
-        return new Vector2f(_position);
+        float x = _position.x;
+        float y = _position.y;
+        if (_parent != null) {
+            Vector2f offset = _parent.getPosition();
+            offset.add(_offset);
+            x += offset.x;
+            y += offset.y;
+        }
+        return new Vector2f(x, y);
+    }
+
+    /**
+     * Set the transform offset
+     * 
+     * @param offset
+     */
+    public void SetOffset(Vector2f offset) {
+        _offset = new Vector2f(offset);
     }
 
 }

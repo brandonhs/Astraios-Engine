@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.joml.Vector2f;
 
+import com.therealjoe24.astraios.gui.elements.ButtonElement;
+
 /**
  * Base class for canvas elements
  * 
@@ -34,6 +36,17 @@ public abstract class CanvasElement {
      * canvas element transform
      */
     protected CanvasElementTransform _transform;
+    
+    protected CanvasElement _parent;
+    
+    /**
+     * Canvas element child elements
+     */
+    protected List<CanvasElement> _children = new ArrayList<>();
+    
+    CanvasElementAlign _align = CanvasElementAlign.ALIGN_CENTER;
+    
+    protected float _width, _height;
 
     /**
      * Create base canvas element
@@ -41,16 +54,80 @@ public abstract class CanvasElement {
      * @param nx
      * @param ny
      */
-    public CanvasElement(float nx, float ny) {
+    public CanvasElement(float nx, float ny, float nw, float nh) {
         _transform = new CanvasElementTransform(new Vector2f(nx, ny));
+        _width = nw;
+        _height = nh;
     }
+    
+    /**
+     * Add child to element
+     * 
+     * @param child
+     */
+    public void AddChild(CanvasElement child) {
+        child.SetParent(this);
+        _children.add(child);
+    }
+    
+    /**
+     * 
+     * @param parent
+     */
+    public void SetParent(CanvasElement parent) {
+        _parent = parent;
+        _transform.SetParent(parent._transform);
+    }
+    
+    /**
+     * Ignore the event
+     * 
+     * @param evt
+     */
+    protected void SupressEvent(CanvasElementEvent evt) {
+        
+    }
+    
+    /**
+     * Send an event to the element
+     * 
+     * @param evt
+     */
+    public abstract void SendEvent(CanvasElementEvent evt);
 
     /**
      * Initialize the element from render context
      * 
      * @param vg
      */
-    public abstract void InitFromContext(long vg);
+    public void InitFromContext(long vg) {
+    }
+    
+    public void RenderChildren(int frameWidth, int frameHeight, long vg) {
+        for (CanvasElement el : _children) {
+            el.Render(frameWidth, frameHeight, vg);
+        }
+    }
+    
+    /**
+     * Set the element alignment
+     * 
+     * @param align
+     */
+    public void SetAlign(CanvasElementAlign align) {
+        _align = align;
+        
+    }
+    
+    /**
+     * 
+     * @param frameWidth
+     * @param frameHeight
+     * @param vg
+     */
+    public void Render(int frameWidth, int frameHeight, long vg) {
+        RenderToCanvas(frameWidth, frameHeight, vg);
+    }
 
     /**
      * Render the element to the render context
@@ -59,6 +136,7 @@ public abstract class CanvasElement {
      * @param frameHeight
      * @param vg
      */
-    public abstract void RenderToCanvas(int frameWidth, int frameHeight, long vg);
+    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {  
+    }
 
 }

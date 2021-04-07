@@ -19,6 +19,7 @@ package com.therealjoe24.astraios.gui.elements;
 
 import com.therealjoe24.astraios.Display;
 import com.therealjoe24.astraios.gui.CanvasElement;
+import com.therealjoe24.astraios.gui.CanvasElementEvent;
 import com.therealjoe24.astraios.renderer.ShaderObject;
 
 import java.io.InputStream;
@@ -69,7 +70,7 @@ public class TextElement extends CanvasElement {
      * @param fontSize font size in pixels
      */
     public TextElement(String text, float nx, float ny, float r, float g, float b, float a, float fontSize) {
-        super(nx, ny);
+        super(nx, ny, 1, 1);
 
         _text = text;
         _fontSize = fontSize;
@@ -94,11 +95,16 @@ public class TextElement extends CanvasElement {
     @Override
     public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
         NanoVG.nvgFontFace(vg, "BOLD");
-        NanoVG.nvgTextAlign(vg, 10);
-        // float fontSize = _fontSize*(float)frameWidth/(float)Display.getMaxWidth();
-        NanoVG.nvgFontSize(vg, _fontSize);
+        NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_CENTER);
+        float maxSize = Display.getMaxWidth();
+        float size = frameWidth;
+        if (frameHeight > frameWidth) {
+            size = frameHeight;
+        }
+        float fontSize = _fontSize*(size/maxSize);
+        NanoVG.nvgFontSize(vg, fontSize);
         NanoVG.nvgFillColor(vg, _col);
-        NanoVG.nvgText(vg, (_transform.getPosition()).x * frameWidth, (_transform.getPosition()).y * frameHeight,
+        NanoVG.nvgText(vg, _transform.getPosition().x * frameWidth, _transform.getPosition().y * frameHeight,
                 _text);
     }
 
@@ -111,10 +117,10 @@ public class TextElement extends CanvasElement {
     static int CreateFont(long vg) {
         int font = -1;
         try {
-            InputStream file = TextElement.class.getResourceAsStream("/res/JetBrainsMono-Regular.ttf");
+            InputStream file = TextElement.class.getResourceAsStream("/res/OpenSans-Bold.ttf");
             if (file == null)
                 // We are in IDE
-                file = TextElement.class.getClassLoader().getResourceAsStream("JetBrainsMono-Regular.ttf");
+                file = TextElement.class.getClassLoader().getResourceAsStream("OpenSans-Bold.ttf");
             byte[] data = file.readAllBytes();
             ByteBuffer buf = BufferUtils.createByteBuffer(data.length);
             buf.put(data);
@@ -124,5 +130,10 @@ public class TextElement extends CanvasElement {
             e.printStackTrace();
         }
         return font;
+    }
+
+    @Override
+    public void SendEvent(CanvasElementEvent evt) {
+        
     }
 }

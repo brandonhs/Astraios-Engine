@@ -27,6 +27,7 @@ import org.joml.Vector3f;
 import com.therealjoe24.astraios.Display;
 import com.therealjoe24.astraios.Input;
 import com.therealjoe24.astraios.gui.Canvas;
+import com.therealjoe24.astraios.gui.elements.ButtonElement;
 import com.therealjoe24.astraios.gui.elements.TextElement;
 import com.therealjoe24.astraios.renderer.BufferLoader;
 import com.therealjoe24.astraios.renderer.MeshData;
@@ -63,10 +64,13 @@ public class Main {
         Texture texture = Texture.LoadTexture("res/wall.png");
 
         Canvas canvas = new Canvas();
-        canvas.AddElement(new TextElement("Astraios 3D Demo", 0.5f, 0.02f, 0, 1, 0, 1, 48));
-        canvas.AddElement(new TextElement("Made by TheRealJoe24", 0.8f, 0.02f, 0.1f, 0.1f, 0.8f, 1, 48));
-        TextElement el = new TextElement("fps: 0", 0.03f, 0.02f, 0.8f, 0.1f, 0.3f, 1, 36);
+        canvas.AddElement(new TextElement("Astraios 3D Demo", 0.5f, 0.05f, 0, 1, 0, 1, 48));
+        canvas.AddElement(new TextElement("Made by TheRealJoe24", 0.8f, 0.05f, 0.1f, 0.1f, 0.8f, 1, 48));
+        TextElement el = new TextElement("fps: 0", 0.2f, 0.05f, 0.8f, 0.1f, 0.3f, 1, 48);
         canvas.AddElement(el);
+        
+        ButtonElement button = new ButtonElement(0.5f, 0.5f, 0.1f, 0.2f);
+        canvas.AddElement(button);
 
         ShaderInstance instance = new ShaderInstance(program);
         PrimitiveMesh mesh = new PrimitiveMesh(loader, new MeshData(texture, 1));
