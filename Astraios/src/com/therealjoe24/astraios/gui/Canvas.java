@@ -25,6 +25,9 @@ import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
 import com.therealjoe24.astraios.Display;
+import com.therealjoe24.astraios.Input;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Stores individual elements
@@ -48,6 +51,24 @@ public class Canvas extends CanvasElement {
             public void invoke() {
                 _canvasWidth = Display.getWidth();
                 _canvasHeight = Display.getHeight();
+            }
+        });
+        Input.AddCursorCallback(new Input.AstraiosInputCursorFunc() {
+            @Override
+            public void invoke(double xpos, double ypos, double deltaX, double deltaY) {
+                SendEvent(CanvasElementEvent.ELEMENT_MOUSE_MOVE, xpos, ypos, _canvasWidth, _canvasHeight);
+            }
+        });
+        Input.AddMouseButtonCallback(new Input.AstraiosInputMouseButtonFunc() {
+            @Override
+            public void invoke(double xpos, double ypos, int button, int action, int mods) {
+                if (button == GLFW_MOUSE_BUTTON_LEFT) {
+                    if (action == GLFW_PRESS) {
+                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_DOWN, xpos, ypos, _canvasWidth, _canvasHeight);
+                    } else if (action == GLFW_RELEASE) {
+                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_UP, xpos, ypos, _canvasWidth, _canvasHeight);
+                    }
+                }
             }
         });
         _vg = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES);
@@ -74,7 +95,7 @@ public class Canvas extends CanvasElement {
     }
 
     @Override
-    public void SendEvent(CanvasElementEvent evt) {
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
         
     }
 

@@ -133,7 +133,8 @@ public class TextElement extends CanvasElement {
     }
 
     @Override
-    public void SendEvent(CanvasElementEvent evt) {
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
+        // TODO Auto-generated method stub
         
     }
 }

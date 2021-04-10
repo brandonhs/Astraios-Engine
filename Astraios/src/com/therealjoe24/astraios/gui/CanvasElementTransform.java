@@ -68,9 +68,9 @@ public class CanvasElementTransform {
         float y = _position.y;
         if (_parent != null) {
             Vector2f offset = _parent.getPosition();
-            offset.add(_offset);
-            x += offset.x;
-            y += offset.y;
+//            System.out.println(offset.x);
+//            x += offset.x;
+//            y += offset.y;
         }
         return new Vector2f(x, y);
     }

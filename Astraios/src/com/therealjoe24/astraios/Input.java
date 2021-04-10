@@ -18,7 +18,13 @@
 package com.therealjoe24.astraios;
 
 import static org.lwjgl.glfw.GLFW.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.glfw.*;
+
+import com.therealjoe24.astraios.Display.SkyGLDisplayResizeFunc;
 
 /**
  * Input Handler
@@ -44,8 +50,41 @@ public class Input {
             _deltaMouseY = ypos - _mouseY;
             _mouseX = xpos;
             _mouseY = ypos;
+            
+            for (AstraiosInputCursorFunc callback : _cursorFuncs) {
+                callback.invoke(xpos, ypos, _deltaMouseX, _deltaMouseY);
+            }
         }
     };
+    
+    private static GLFWMouseButtonCallback _mouseButtonCallback = new GLFWMouseButtonCallback() {
+        @Override
+        public void invoke(long window, int button, int action, int mods) {
+            for (AstraiosInputMouseButtonFunc callback : _mouseButtonFuncs) {
+                callback.invoke(_mouseX, _mouseY, button, action, mods);
+            }
+        }
+    };
+    
+    /**
+     * Cursor Callbacks
+     * 
+     */
+    public static abstract interface AstraiosInputCursorFunc {
+        public abstract void invoke(double xpos, double ypos, double deltaX, double deltaY);
+    }
+
+    private static List<AstraiosInputCursorFunc> _cursorFuncs = new ArrayList<>();
+    
+    /**
+     * Cursor Callbacks
+     * 
+     */
+    public static abstract interface AstraiosInputMouseButtonFunc {
+        public abstract void invoke(double xpos, double ypos, int button, int action, int mods);
+    }
+
+    private static List<AstraiosInputMouseButtonFunc> _mouseButtonFuncs = new ArrayList<>();
 
     /**
      * Get the mouse delta x
@@ -71,8 +110,17 @@ public class Input {
      */
     public static void Init() {
         glfwSetCursorPosCallback(Display.getWindowID(), _cursorPosCallback);
+        glfwSetMouseButtonCallback(Display.getWindowID(), _mouseButtonCallback);
+    }
+    
+    public static void AddCursorCallback(AstraiosInputCursorFunc func) {
+        _cursorFuncs.add(func);
     }
 
+    public static void AddMouseButtonCallback(AstraiosInputMouseButtonFunc func) {
+        _mouseButtonFuncs.add(func);
+    }
+    
     /**
      * Update the Input Manager
      * 

@@ -17,19 +17,35 @@
  ******************************************************************************/
 package com.therealjoe24.astraios.gui.elements;
 
+import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 
 public class ColorRectElement extends CanvasElement {
+    
+    /**
+     * color buffer
+     */
+    private NVGColor _col;
 
     public ColorRectElement(float nx, float ny, float nw, float nh) {
         super(nx, ny, nw, nh);
+        
+        /* create color buffer and store color data */
+        _col = NVGColor.create();
+        _col.r(1);
+        _col.g(0);
+        _col.b(0);
+        _col.a(1);
     }
-
-    @Override
-    public void SendEvent(CanvasElementEvent evt) {
+    
+    public void SetColor(float r, float g, float b, float a) {
+        _col.r(r);
+        _col.g(g);
+        _col.b(b);
+        _col.a(a);
     }
 
     @Override
@@ -38,8 +54,14 @@ public class ColorRectElement extends CanvasElement {
 
     @Override
     public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
-        NanoVG.nvgRect(vg, _transform.getPosition().x * frameWidth, _transform.getPosition().y * frameHeight, _width*frameWidth, _height*frameHeight);
+        NanoVG.nvgFillColor(vg, _col);
+        NanoVG.nvgRect(vg, _transform.getPosition().x * frameWidth, _transform.getPosition().y * frameHeight, _width, _height);
         NanoVG.nvgFill(vg);
+    }
+
+    @Override
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
+        
     }
 
 }

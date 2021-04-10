@@ -89,11 +89,25 @@ public abstract class CanvasElement {
     }
     
     /**
+     * TODO: CONVERT FROM ENUM TO CLASS
+     * This will allow for multiple child classes to detect if the event "contains" an element
+     * If it doesn't, supress it
+     * @param evt
+     */
+    public void SendEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
+        // if (!Contains((float)mouseX/(float)frameWidth, (float)mouseY/(float)frameHeight)) return;
+        ReceiveEvent(evt, mouseX/frameWidth, mouseY/frameHeight, frameWidth, frameHeight);
+        for (CanvasElement el : _children) {
+            el.SendEvent(evt, mouseX, mouseY, frameWidth, frameHeight);
+        }
+    }
+    
+    /**
      * Send an event to the element
      * 
      * @param evt
      */
-    public abstract void SendEvent(CanvasElementEvent evt);
+    protected abstract void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight);
 
     /**
      * Initialize the element from render context
@@ -119,6 +133,15 @@ public abstract class CanvasElement {
         
     }
     
+    public boolean Contains(float x, float y, int frameWidth, int frameHeight) {
+        Vector2f m_vec = _transform.getPosition();
+        if (x > m_vec.x && x < m_vec.x + (_width / frameWidth)
+                && y > m_vec.y && y < m_vec.y + (_height / frameHeight)) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * 
      * @param frameWidth
@@ -136,7 +159,7 @@ public abstract class CanvasElement {
      * @param frameHeight
      * @param vg
      */
-    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {  
+    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) { 
     }
 
 }

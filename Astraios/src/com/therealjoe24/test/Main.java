@@ -69,7 +69,7 @@ public class Main {
         TextElement el = new TextElement("fps: 0", 0.2f, 0.05f, 0.8f, 0.1f, 0.3f, 1, 48);
         canvas.AddElement(el);
         
-        ButtonElement button = new ButtonElement(0.5f, 0.5f, 0.1f, 0.2f);
+        ButtonElement button = new ButtonElement(0.1f, 0.1f, 200, 200);
         canvas.AddElement(button);
 
         ShaderInstance instance = new ShaderInstance(program);
