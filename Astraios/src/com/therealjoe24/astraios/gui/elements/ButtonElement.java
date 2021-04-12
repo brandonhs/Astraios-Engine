@@ -52,6 +52,7 @@ public class ButtonElement extends CanvasElement {
     @Override
     protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) {
         boolean contains = _transform.Contains((float)mouseX, (float)mouseY);
+        _state = ButtonState.BUTTON_RELEASED;
         if (evt == CanvasElementEvent.ELEMENT_MOUSE_DOWN && contains) {
             _state = ButtonState.BUTTON_PRESSED;
             _childRect.SetColor(0,1,0,1);
