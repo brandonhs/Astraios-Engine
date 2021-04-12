@@ -30,6 +30,7 @@ import com.therealjoe24.astraios.gui.Canvas;
 import com.therealjoe24.astraios.gui.elements.ButtonElement;
 import com.therealjoe24.astraios.gui.elements.ColorRectElement;
 import com.therealjoe24.astraios.gui.elements.TextElement;
+import com.therealjoe24.astraios.gui.elements.ButtonElement.ButtonState;
 import com.therealjoe24.astraios.renderer.BufferLoader;
 import com.therealjoe24.astraios.renderer.MeshData;
 import com.therealjoe24.astraios.renderer.PrimitiveMesh;
@@ -70,7 +71,15 @@ public class Main {
         TextElement el = new TextElement("fps: 0", 0.2f, 0.05f, 0.8f, 0.1f, 0.3f, 1, 48);
         canvas.AddElement(el);
         
-        ButtonElement button = new ButtonElement(0.2f, 0.2f, 0.1f, 0.1f);
+        ButtonElement button = new ButtonElement(0.2f, 0.2f, 0.1f, 0.1f, "Click Me!");
+        button.AddButtonEventHandler(new ButtonElement.ButtonEventHandler() {
+            @Override
+            public void invoke(ButtonState state) {
+                if (state == ButtonState.BUTTON_PRESSED) {
+                    System.out.println("Pressed!");
+                }
+            }
+        });
         canvas.AddElement(button);
 
         ShaderInstance instance = new ShaderInstance(program);

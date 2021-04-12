@@ -133,6 +133,10 @@ public abstract class CanvasElement {
         
     }
     
+    public void SetOffset(Vector2f offset) {
+        _transform.SetOffset(offset);
+    }
+    
     public boolean Contains(float x, float y) {
         Vector2f m_vec = _transform.getPosition();
         if (x > m_vec.x && x < m_vec.x + (_width)
@@ -150,6 +154,7 @@ public abstract class CanvasElement {
      */
     public void Render(int frameWidth, int frameHeight, long vg) {
         RenderToCanvas(frameWidth, frameHeight, vg);
+        RenderChildren(frameWidth, frameHeight, vg);
     }
 
     /**
