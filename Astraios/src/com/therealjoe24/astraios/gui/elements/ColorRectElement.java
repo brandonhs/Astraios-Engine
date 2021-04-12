@@ -17,13 +17,19 @@
  ******************************************************************************/
 package com.therealjoe24.astraios.gui.elements;
 
+import org.joml.Vector2f;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
-import com.therealjoe24.astraios.Display;
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 
+/**
+ * Colored rectangle element
+ * 
+ * @author TheRealJoe24
+ *
+ */
 public class ColorRectElement extends CanvasElement {
     
     /**
@@ -31,6 +37,14 @@ public class ColorRectElement extends CanvasElement {
      */
     private NVGColor _col;
 
+    /**
+     * Creates a color rect element
+     * 
+     * @param nx
+     * @param ny
+     * @param nw
+     * @param nh
+     */
     public ColorRectElement(float nx, float ny, float nw, float nh) {
         super(nx, ny, nw, nh);
         
@@ -42,6 +56,14 @@ public class ColorRectElement extends CanvasElement {
         _col.a(1);
     }
     
+    /**
+     * Sets the color of the rect
+     * 
+     * @param r
+     * @param g
+     * @param b
+     * @param a
+     */
     public void SetColor(float r, float g, float b, float a) {
         _col.r(r);
         _col.g(g);
@@ -54,15 +76,16 @@ public class ColorRectElement extends CanvasElement {
     }
 
     @Override
-    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
+    public void RenderToCanvas(long vg) {
         NanoVG.nvgFillColor(vg, _col);
         /* NOTE: the begin path here is VERY important */
         NanoVG.nvgBeginPath(vg);
-        NanoVG.nvgRect(vg, _transform.getPosition().x * frameWidth, _transform.getPosition().y * frameHeight, _width * frameWidth, _height * frameHeight);
+        Vector2f pos = _transform.getPosition();
+        NanoVG.nvgRect(vg, pos.x, pos.y, _transform.getWidth(), _transform.getHeight());
         NanoVG.nvgFill(vg);
     }
 
     @Override
-    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) { }
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) { }
 
 }

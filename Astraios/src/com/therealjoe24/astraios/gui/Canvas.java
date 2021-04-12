@@ -30,33 +30,30 @@ import com.therealjoe24.astraios.Input;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Stores individual elements
+ * Handles context creation and element events
  * 
  * @author TheRealJoe24
  *
  */
 public class Canvas extends CanvasElement {
     
-    private int _canvasWidth;
-    private int _canvasHeight;
-    private long _vg;
-
     /**
-     * Create Canvas Object
-     * 
+     * The NanoSVG context
      */
+    private long _vg;
+    
     public Canvas() {
-        super(0, 0, 1, 1);
-        Display.AddResizeCallbackFunc(new Display.SkyGLDisplayResizeFunc() {
+        super(0, 0, Display.getWidth(), Display.getHeight());
+        Display.AddResizeCallbackFunc(new Display.AstraiosDisplayResizeFunc() {
+            @Override
             public void invoke() {
-                _canvasWidth = Display.getWidth();
-                _canvasHeight = Display.getHeight();
+                _transform.SetSize(Display.getWidth(), Display.getHeight());
             }
         });
         Input.AddCursorCallback(new Input.AstraiosInputCursorFunc() {
             @Override
             public void invoke(double xpos, double ypos, double deltaX, double deltaY) {
-                SendEvent(CanvasElementEvent.ELEMENT_MOUSE_MOVE, xpos, ypos, _canvasWidth, _canvasHeight);
+                SendEvent(CanvasElementEvent.ELEMENT_MOUSE_MOVE, xpos, ypos);
             }
         });
         Input.AddMouseButtonCallback(new Input.AstraiosInputMouseButtonFunc() {
@@ -64,16 +61,18 @@ public class Canvas extends CanvasElement {
             public void invoke(double xpos, double ypos, int button, int action, int mods) {
                 if (button == GLFW_MOUSE_BUTTON_LEFT) {
                     if (action == GLFW_PRESS) {
-                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_DOWN, xpos, ypos, _canvasWidth, _canvasHeight);
+                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_DOWN, xpos, ypos);
                     } else if (action == GLFW_RELEASE) {
-                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_UP, xpos, ypos, _canvasWidth, _canvasHeight);
+                        SendEvent(CanvasElementEvent.ELEMENT_MOUSE_UP, xpos, ypos);
                     }
                 }
+                SendEvent(CanvasElementEvent.ELEMENT_MOUSE_MOVE, xpos, ypos);
             }
         });
         _vg = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES);
     }
-
+    
+    
     /**
      * Add new element to element list
      * 
@@ -89,14 +88,12 @@ public class Canvas extends CanvasElement {
      * 
      */
     public void Render() {
-        NanoVG.nvgBeginFrame(_vg, _canvasWidth, _canvasHeight, 1);
-        RenderChildren(_canvasWidth, _canvasHeight, _vg);
+        NanoVG.nvgBeginFrame(_vg, _transform.getWidth(), _transform.getHeight(), 1);
+        RenderChildren(_vg);
         NanoVG.nvgEndFrame(_vg);
     }
 
     @Override
-    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
-        
-    }
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) { }
 
 }

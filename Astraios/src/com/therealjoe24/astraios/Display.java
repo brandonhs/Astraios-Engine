@@ -69,11 +69,11 @@ public class Display {
      * Resize Callback
      * 
      */
-    public static abstract interface SkyGLDisplayResizeFunc {
+    public static abstract interface AstraiosDisplayResizeFunc {
         public abstract void invoke();
     }
 
-    private static List<SkyGLDisplayResizeFunc> _resizeFuncs = new ArrayList<SkyGLDisplayResizeFunc>();
+    private static List<AstraiosDisplayResizeFunc> _resizeFuncs = new ArrayList<AstraiosDisplayResizeFunc>();
 
     /**
      * Called when the window is resized
@@ -186,7 +186,7 @@ public class Display {
             public void invoke(long window, int width, int height) {
                 _resizeCallback(width, height);
 
-                for (SkyGLDisplayResizeFunc func : _resizeFuncs) {
+                for (AstraiosDisplayResizeFunc func : _resizeFuncs) {
                     func.invoke();
                 }
             }
@@ -198,7 +198,7 @@ public class Display {
      * 
      * @param func function to call on resize
      */
-    public static void AddResizeCallbackFunc(SkyGLDisplayResizeFunc func) {
+    public static void AddResizeCallbackFunc(AstraiosDisplayResizeFunc func) {
         _resizeFuncs.add(func);
     }
 

@@ -71,7 +71,7 @@ public class Main {
         TextElement el = new TextElement("fps: 0", 0.2f, 0.05f, 0.8f, 0.1f, 0.3f, 1, 48);
         canvas.AddElement(el);
         
-        ButtonElement button = new ButtonElement(0.2f, 0.2f, 0.1f, 0.1f, "Click Me!");
+        ButtonElement button = new ButtonElement(0.2f, 0.2f, 200, 200, "Click Me!");
         button.AddButtonEventHandler(new ButtonElement.ButtonEventHandler() {
             @Override
             public void invoke(ButtonState state) {
