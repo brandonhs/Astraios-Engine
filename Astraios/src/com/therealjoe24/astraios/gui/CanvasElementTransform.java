@@ -28,21 +28,25 @@ import org.joml.Vector2f;
 public class CanvasElementTransform {
 
     private Vector2f _position;
+    private float _width, _height;
     private CanvasElementTransform _parent;
-    
-    private Vector2f _offset;
 
     /**
      * Create an element transform
      * 
      * @param position
      */
-    public CanvasElementTransform(Vector2f position) {
+    public CanvasElementTransform(Vector2f position, float width, float height) {
         _position = new Vector2f(position);
-        _offset = new Vector2f(0);
+        _width = width;
+        _height = height;
         _parent = null;
     }
     
+    /**
+     * 
+     * @param parent
+     */
     public void SetParent(CanvasElementTransform parent) {
         _parent = parent;
     }
@@ -53,13 +57,115 @@ public class CanvasElementTransform {
      * @param position
      * @param parent
      */
-    public CanvasElementTransform(Vector2f position, CanvasElementTransform parent) {
-        this(position);
+    public CanvasElementTransform(Vector2f position, float width, float height, CanvasElementTransform parent) {
+        this(position, width, height);
         _parent = parent;
+    }
+    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
+    public CanvasElementTransform(float x, float y, float width, float height) {
+        this(new Vector2f(x, y), width, height);
+    }
+    
+    /**
+     * 
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean Contains(CanvasElementTransform other) {float m_left = getLeft();
+        float m_right = getRight();
+        float m_top = getTop();
+        float m_bottom = getBottom();
+        
+        float o_left = other.getLeft();
+        float o_right = other.getRight();
+        float o_top = other.getTop();
+        float o_bottom = other.getBottom();
+        
+        if (o_right > m_left && o_left < m_right
+         && o_bottom > m_top && o_top < m_bottom) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean Contains(float x, float y) {
+        float m_left = getLeft();
+        float m_right = getRight();
+        float m_top = getTop();
+        float m_bottom = getBottom();
+        
+        if (x > m_left && x < m_right
+         && y > m_top && y < m_bottom) {
+            return true;
+        }
+        return false;
+    }
+    
+    public float getLeft() {
+        return getPosition().x;
+    }
+    
+    public float getTop() {
+        return getPosition().y;
+    }
+    
+    public float getRight() {
+        return getPosition().x + _width;
+    }
+    
+    public float getBottom() {
+        return getPosition().y + _height;
+    }
+    
+    public float getWidth() {
+        return _width;
+    }
+    
+    public float getHeight() {
+        return _height;
+    }
+    
+    /**
+     * Hacky way to get the viewport width
+     * 
+     * @return
+     */
+    public float traverseViewportWidth() {
+        if (_parent != null) {
+            return _parent._width;
+        }
+        return _width;
+    }
+    
+    /**
+     * Hacky way to get the viewport height
+     * 
+     * @return
+     */
+    public float traverseViewportHeight() {
+        if (_parent != null) {
+            return _parent._height;
+        }
+        return _height;
     }
 
     /**
-     * get the position
+     * get the position in pixel space
      * 
      * @return position
      */
@@ -68,20 +174,18 @@ public class CanvasElementTransform {
         float y = _position.y;
         if (_parent != null) {
             Vector2f offset = _parent.getPosition();
-//            System.out.println(offset.x);
+            x *= traverseViewportWidth();
+            y *= traverseViewportHeight();
             x += offset.x;
             y += offset.y;
+            return new Vector2f(x, y);
         }
-        return new Vector2f(x, y);
+        return new Vector2f(x*traverseViewportWidth(), y*traverseViewportHeight());
     }
-
-    /**
-     * Set the transform offset
-     * 
-     * @param offset
-     */
-    public void SetOffset(Vector2f offset) {
-        _offset = new Vector2f(offset);
+    
+    public void SetSize(float width, float height) {
+        _width = width;
+        _height = height;
     }
-
+    
 }

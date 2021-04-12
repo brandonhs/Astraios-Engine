@@ -93,18 +93,20 @@ public class TextElement extends CanvasElement {
     }
 
     @Override
-    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
+    public void RenderToCanvas(long vg) {
         NanoVG.nvgFontFace(vg, "BOLD");
         NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_CENTER);
         float maxSize = Display.getMaxWidth();
-        float size = frameWidth;
+        float frameWidth = _transform.traverseViewportWidth();
+        float frameHeight = _transform.traverseViewportWidth();
+        float size = _transform.traverseViewportWidth();
         if (frameHeight > frameWidth) {
             size = frameHeight;
         }
         float fontSize = _fontSize*(size/maxSize);
         NanoVG.nvgFontSize(vg, fontSize);
         NanoVG.nvgFillColor(vg, _col);
-        NanoVG.nvgText(vg, _transform.getPosition().x * frameWidth, _transform.getPosition().y * frameHeight,
+        NanoVG.nvgText(vg, _transform.getPosition().x, _transform.getPosition().y,
                 _text);
     }
 
@@ -133,7 +135,7 @@ public class TextElement extends CanvasElement {
     }
 
     @Override
-    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) {
         // TODO Auto-generated method stub
         
     }

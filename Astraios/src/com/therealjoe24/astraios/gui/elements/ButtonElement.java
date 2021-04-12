@@ -44,18 +44,14 @@ public class ButtonElement extends CanvasElement {
     }
 
     @Override
-    public void InitFromContext(long vg) {
-        
-    }
+    public void InitFromContext(long vg) { }
 
     @Override
-    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) {
-        
-    }
+    public void RenderToCanvas(long vg) { }
 
     @Override
-    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
-        boolean contains = Contains((float)mouseX, (float)mouseY);
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) {
+        boolean contains = _transform.Contains((float)mouseX, (float)mouseY);
         if (evt == CanvasElementEvent.ELEMENT_MOUSE_DOWN && contains) {
             _state = ButtonState.BUTTON_PRESSED;
             _childRect.SetColor(0,1,0,1);

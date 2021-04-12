@@ -43,10 +43,6 @@ public abstract class CanvasElement {
      * Canvas element child elements
      */
     protected List<CanvasElement> _children = new ArrayList<>();
-    
-    CanvasElementAlign _align = CanvasElementAlign.ALIGN_CENTER;
-    
-    protected float _width, _height;
 
     /**
      * Create base canvas element
@@ -54,10 +50,8 @@ public abstract class CanvasElement {
      * @param nx
      * @param ny
      */
-    public CanvasElement(float nx, float ny, float nw, float nh) {
-        _transform = new CanvasElementTransform(new Vector2f(nx, ny));
-        _width = nw;
-        _height = nh;
+    public CanvasElement(float nx, float ny, float width, float height) {
+        _transform = new CanvasElementTransform(nx, ny, width, height);
     }
     
     /**
@@ -94,11 +88,11 @@ public abstract class CanvasElement {
      * If it doesn't, supress it
      * @param evt
      */
-    public void SendEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
+    public void SendEvent(CanvasElementEvent evt, double mouseX, double mouseY) {
         // if (!Contains((float)mouseX/(float)frameWidth, (float)mouseY/(float)frameHeight)) return;
-        ReceiveEvent(evt, mouseX/frameWidth, mouseY/frameHeight, frameWidth, frameHeight);
+        ReceiveEvent(evt, mouseX, mouseY);
         for (CanvasElement el : _children) {
-            el.SendEvent(evt, mouseX, mouseY, frameWidth, frameHeight);
+            el.SendEvent(evt, mouseX, mouseY);
         }
     }
     
@@ -107,7 +101,7 @@ public abstract class CanvasElement {
      * 
      * @param evt
      */
-    protected abstract void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight);
+    protected abstract void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY);
 
     /**
      * Initialize the element from render context
@@ -117,33 +111,10 @@ public abstract class CanvasElement {
     public void InitFromContext(long vg) {
     }
     
-    public void RenderChildren(int frameWidth, int frameHeight, long vg) {
+    public void RenderChildren(long vg) {
         for (CanvasElement el : _children) {
-            el.Render(frameWidth, frameHeight, vg);
+            el.Render(vg);
         }
-    }
-    
-    /**
-     * Set the element alignment
-     * 
-     * @param align
-     */
-    public void SetAlign(CanvasElementAlign align) {
-        _align = align;
-        
-    }
-    
-    public void SetOffset(Vector2f offset) {
-        _transform.SetOffset(offset);
-    }
-    
-    public boolean Contains(float x, float y) {
-        Vector2f m_vec = _transform.getPosition();
-        if (x > m_vec.x && x < m_vec.x + (_width)
-                && y > m_vec.y && y < m_vec.y + (_height)) {
-            return true;
-        }
-        return false;
     }
     
     /**
@@ -152,9 +123,9 @@ public abstract class CanvasElement {
      * @param frameHeight
      * @param vg
      */
-    public void Render(int frameWidth, int frameHeight, long vg) {
-        RenderToCanvas(frameWidth, frameHeight, vg);
-        RenderChildren(frameWidth, frameHeight, vg);
+    public void Render(long vg) {
+        RenderToCanvas(vg);
+        RenderChildren(vg);
     }
 
     /**
@@ -164,7 +135,7 @@ public abstract class CanvasElement {
      * @param frameHeight
      * @param vg
      */
-    public void RenderToCanvas(int frameWidth, int frameHeight, long vg) { 
+    public void RenderToCanvas(long vg) { 
     }
 
 }
