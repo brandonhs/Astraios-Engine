@@ -1,5 +1,7 @@
 package com.therealjoe24.astraios.gui.elements;
 
+import org.joml.Vector2f;
+
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 
@@ -32,7 +34,7 @@ public class ButtonElement extends CanvasElement {
 
     @Override
     protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY, int frameWidth, int frameHeight) {
-        boolean contains = Contains((float)mouseX, (float)mouseY, frameWidth, frameHeight);
+        boolean contains = Contains((float)mouseX, (float)mouseY);
         if (evt == CanvasElementEvent.ELEMENT_MOUSE_DOWN && contains) {
             _state = ButtonState.BUTTON_PRESSED;
             _childRect.SetColor(0,1,0,1);

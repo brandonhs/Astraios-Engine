@@ -133,10 +133,10 @@ public abstract class CanvasElement {
         
     }
     
-    public boolean Contains(float x, float y, int frameWidth, int frameHeight) {
+    public boolean Contains(float x, float y) {
         Vector2f m_vec = _transform.getPosition();
-        if (x > m_vec.x && x < m_vec.x + (_width / frameWidth)
-                && y > m_vec.y && y < m_vec.y + (_height / frameHeight)) {
+        if (x > m_vec.x && x < m_vec.x + (_width)
+                && y > m_vec.y && y < m_vec.y + (_height)) {
             return true;
         }
         return false;

@@ -72,7 +72,7 @@ public class CanvasElementTransform {
 //            x += offset.x;
 //            y += offset.y;
         }
-        return new Vector2f(x, y);
+        return new Vector2f(_position);
     }
 
     /**
