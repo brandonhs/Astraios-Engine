@@ -20,7 +20,7 @@ Get a local copy of the repository with `git clone https://github.com/TheRealJoe
 
 -   LWJGL3
 
-    Download and extract the lates release from https://github.com/LWJGL/lwjgl3/releases/tag/3.2.3
+    Download and extract the latest release from https://github.com/LWJGL/lwjgl3/releases/tag/3.2.3
 
 -   PNGDecoder
 
