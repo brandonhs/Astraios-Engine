@@ -95,7 +95,7 @@ public class TextElement extends CanvasElement {
     @Override
     public void RenderToCanvas(long vg) {
         NanoVG.nvgFontFace(vg, "BOLD");
-        NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_CENTER);
+        NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_MIDDLE | NanoVG.NVG_ALIGN_CENTER);
         float maxSize = Display.getMaxWidth();
         float frameWidth = _transform.traverseViewportWidth();
         float frameHeight = _transform.traverseViewportHeight();
