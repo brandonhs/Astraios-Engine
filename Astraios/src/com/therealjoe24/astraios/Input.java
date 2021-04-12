@@ -24,8 +24,6 @@ import java.util.List;
 
 import org.lwjgl.glfw.*;
 
-import com.therealjoe24.astraios.Display.SkyGLDisplayResizeFunc;
-
 /**
  * Input Handler
  * 

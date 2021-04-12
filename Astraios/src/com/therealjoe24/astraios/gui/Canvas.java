@@ -37,11 +37,14 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class Canvas extends CanvasElement {
     
+    /**
+     * The NanoSVG context
+     */
     private long _vg;
     
     public Canvas() {
         super(0, 0, Display.getWidth(), Display.getHeight());
-        Display.AddResizeCallbackFunc(new Display.SkyGLDisplayResizeFunc() {
+        Display.AddResizeCallbackFunc(new Display.AstraiosDisplayResizeFunc() {
             @Override
             public void invoke() {
                 _transform.SetSize(Display.getWidth(), Display.getHeight());
