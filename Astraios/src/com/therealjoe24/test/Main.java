@@ -81,6 +81,7 @@ public class Main {
             }
         });
         canvas.AddElement(button);
+        canvas.AddElement(new ButtonElement(0.5f, 0.2f, 400, 300, "Click Me Too!"));
 
         ShaderInstance instance = new ShaderInstance(program);
         PrimitiveMesh mesh = new PrimitiveMesh(loader, new MeshData(texture, 1));

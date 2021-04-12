@@ -21,6 +21,7 @@ import org.joml.Vector2f;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
+import com.therealjoe24.astraios.Display;
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 

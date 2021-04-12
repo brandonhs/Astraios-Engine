@@ -19,6 +19,8 @@ package com.therealjoe24.astraios.gui;
 
 import org.joml.Vector2f;
 
+import com.therealjoe24.astraios.Display;
+
 /**
  * The Transform of a canvas element
  * 
@@ -125,19 +127,32 @@ public class CanvasElementTransform {
     }
     
     public float getRight() {
-        return getPosition().x + _width;
+        return getPosition().x + getWidth();
     }
     
     public float getBottom() {
-        return getPosition().y + _height;
+        return getPosition().y + getHeight();
+    }
+    
+    public float getScale() {
+        /* make sure direct children of the canvas are not offset by a scaled size, since the canvas is already scaled */
+        if (isRoot()) return 1;
+        float maxSize = Display.getMaxWidth();
+        float frameWidth = traverseViewportWidth();
+        float frameHeight = traverseViewportHeight();
+        float size = traverseViewportWidth();
+        if (frameHeight > frameWidth) {
+            size = frameHeight;
+        }
+        return size / maxSize;
     }
     
     public float getWidth() {
-        return _width;
+        return _width*getScale();
     }
     
     public float getHeight() {
-        return _height;
+        return _height*getScale();
     }
     
     /**
@@ -181,6 +196,16 @@ public class CanvasElementTransform {
             return new Vector2f(x, y);
         }
         return new Vector2f(x*traverseViewportWidth(), y*traverseViewportHeight());
+    }
+    
+    /**
+     * Hacky way to avoid scaling the canvas
+     * TODO: allow scaling of the canvas to avoid this
+     * 
+     * @return
+     */
+    public boolean isRoot() {
+        return _parent == null;
     }
     
     /**
