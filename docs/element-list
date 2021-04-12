@@ -1,8 +1,8 @@
-com.therealjoe24.skygl
-com.therealjoe24.skygl.gui
-com.therealjoe24.skygl.gui.elements
-com.therealjoe24.skygl.renderer
-com.therealjoe24.skygl.renderer.camera
-com.therealjoe24.skygl.renderer.objects
-com.therealjoe24.skygl.renderer.texture
+com.therealjoe24.astraios
+com.therealjoe24.astraios.gui
+com.therealjoe24.astraios.gui.elements
+com.therealjoe24.astraios.renderer
+com.therealjoe24.astraios.renderer.camera
+com.therealjoe24.astraios.renderer.objects
+com.therealjoe24.astraios.renderer.texture
 com.therealjoe24.test
