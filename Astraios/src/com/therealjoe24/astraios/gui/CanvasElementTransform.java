@@ -147,7 +147,7 @@ public class CanvasElementTransform {
      */
     public float traverseViewportWidth() {
         if (_parent != null) {
-            return _parent._width;
+            return _parent.traverseViewportWidth();
         }
         return _width;
     }
@@ -159,7 +159,7 @@ public class CanvasElementTransform {
      */
     public float traverseViewportHeight() {
         if (_parent != null) {
-            return _parent._height;
+            return _parent.traverseViewportHeight();
         }
         return _height;
     }
@@ -174,8 +174,8 @@ public class CanvasElementTransform {
         float y = _position.y;
         if (_parent != null) {
             Vector2f offset = _parent.getPosition();
-            x *= traverseViewportWidth();
-            y *= traverseViewportHeight();
+            x *= _parent.getWidth();
+            y *= _parent.getHeight();
             x += offset.x;
             y += offset.y;
             return new Vector2f(x, y);

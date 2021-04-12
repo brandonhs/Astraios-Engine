@@ -55,7 +55,7 @@ public class ButtonElement extends CanvasElement {
     
     public ButtonElement(float nx, float ny, float nw, float nh, String text) {
         this(nx, ny, nw, nh);
-        _childText = new TextElement(text, 0, 0, 1, 1, 1, 1, 48);
+        _childText = new TextElement(text, 0.5f, 0.5f, 1, 1, 1, 1, 48);
         _childRect.AddChild(_childText);
         // _childText.SetOffset(new Vector2f(0.5f, 0.5f));
     }

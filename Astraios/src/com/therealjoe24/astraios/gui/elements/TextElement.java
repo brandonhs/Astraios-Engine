@@ -98,7 +98,7 @@ public class TextElement extends CanvasElement {
         NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_CENTER);
         float maxSize = Display.getMaxWidth();
         float frameWidth = _transform.traverseViewportWidth();
-        float frameHeight = _transform.traverseViewportWidth();
+        float frameHeight = _transform.traverseViewportHeight();
         float size = _transform.traverseViewportWidth();
         if (frameHeight > frameWidth) {
             size = frameHeight;
