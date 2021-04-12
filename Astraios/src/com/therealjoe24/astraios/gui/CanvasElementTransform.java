@@ -183,6 +183,12 @@ public class CanvasElementTransform {
         return new Vector2f(x*traverseViewportWidth(), y*traverseViewportHeight());
     }
     
+    /**
+     * Sets the width and height of the element
+     * 
+     * @param width
+     * @param height
+     */
     public void SetSize(float width, float height) {
         _width = width;
         _height = height;

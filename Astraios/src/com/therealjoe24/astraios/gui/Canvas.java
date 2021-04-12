@@ -30,7 +30,7 @@ import com.therealjoe24.astraios.Input;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Stores individual elements
+ * Handles context creation and element events
  * 
  * @author TheRealJoe24
  *

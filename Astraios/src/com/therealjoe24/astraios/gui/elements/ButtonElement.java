@@ -25,27 +25,64 @@ import org.joml.Vector2f;
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 
+/**
+ * Button element
+ * 
+ * @author TheRealJoe24
+ *
+ */
 public class ButtonElement extends CanvasElement {
 
     public enum ButtonState {
         BUTTON_PRESSED, BUTTON_RELEASED
     }
     
+    /**
+     * Current state of the button
+     */
     private ButtonState _state;
     
+    /**
+     * Reference to child rect
+     */
     private ColorRectElement _childRect;
+    /**
+     * Reference to text element contained by child rect
+     */
     private TextElement _childText;
     
+    /**
+     * Handles button events
+     * 
+     * @author TheRealJoe24
+     *
+     */
     public static abstract class ButtonEventHandler {
         public abstract void invoke(ButtonState state);
     }
     
+    /**
+     * List of button event handlers to be invoked on an event
+     */
     private List<ButtonEventHandler> _buttonEventHandlers = new ArrayList<ButtonEventHandler>();
     
+    /**
+     * Adds a button event handler
+     * 
+     * @param callback
+     */
     public void AddButtonEventHandler(ButtonEventHandler callback) {
         _buttonEventHandlers.add(callback);
     }
     
+    /**
+     * Creates a button element
+     * 
+     * @param nx
+     * @param ny
+     * @param nw
+     * @param nh
+     */
     public ButtonElement(float nx, float ny, float nw, float nh) {
         super(nx, ny, nw, nh);
         _childRect = new ColorRectElement(0, 0, nw, nh);
@@ -53,11 +90,19 @@ public class ButtonElement extends CanvasElement {
         _state = ButtonState.BUTTON_RELEASED;
     }
     
+    /**
+     * Creates a button element with text
+     * 
+     * @param nx
+     * @param ny
+     * @param nw
+     * @param nh
+     * @param text
+     */
     public ButtonElement(float nx, float ny, float nw, float nh, String text) {
         this(nx, ny, nw, nh);
         _childText = new TextElement(text, 0.5f, 0.5f, 1, 1, 1, 1, 48);
         _childRect.AddChild(_childText);
-        // _childText.SetOffset(new Vector2f(0.5f, 0.5f));
     }
 
     @Override

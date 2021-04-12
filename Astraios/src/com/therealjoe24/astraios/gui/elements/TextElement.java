@@ -83,6 +83,11 @@ public class TextElement extends CanvasElement {
         _col.a(a);
     }
 
+    /**
+     * Sets the text if the element
+     * 
+     * @param text
+     */
     public void SetText(String text) {
         _text = text;
     }

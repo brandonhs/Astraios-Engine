@@ -24,6 +24,12 @@ import org.lwjgl.nanovg.NanoVG;
 import com.therealjoe24.astraios.gui.CanvasElement;
 import com.therealjoe24.astraios.gui.CanvasElementEvent;
 
+/**
+ * Colored rectangle element
+ * 
+ * @author TheRealJoe24
+ *
+ */
 public class ColorRectElement extends CanvasElement {
     
     /**
@@ -31,6 +37,14 @@ public class ColorRectElement extends CanvasElement {
      */
     private NVGColor _col;
 
+    /**
+     * Creates a color rect element
+     * 
+     * @param nx
+     * @param ny
+     * @param nw
+     * @param nh
+     */
     public ColorRectElement(float nx, float ny, float nw, float nh) {
         super(nx, ny, nw, nh);
         
@@ -42,6 +56,14 @@ public class ColorRectElement extends CanvasElement {
         _col.a(1);
     }
     
+    /**
+     * Sets the color of the rect
+     * 
+     * @param r
+     * @param g
+     * @param b
+     * @param a
+     */
     public void SetColor(float r, float g, float b, float a) {
         _col.r(r);
         _col.g(g);
