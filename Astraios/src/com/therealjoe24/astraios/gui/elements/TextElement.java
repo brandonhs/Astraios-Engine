@@ -17,16 +17,17 @@
  ******************************************************************************/
 package com.therealjoe24.astraios.gui.elements;
 
-import com.therealjoe24.astraios.Display;
-import com.therealjoe24.astraios.gui.CanvasElement;
-import com.therealjoe24.astraios.gui.CanvasElementEvent;
-import com.therealjoe24.astraios.renderer.ShaderObject;
-
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
+
+import com.therealjoe24.astraios.Display;
+import com.therealjoe24.astraios.gui.CanvasElement;
+import com.therealjoe24.astraios.gui.CanvasElementEvent;
+import com.therealjoe24.astraios.gui.fonts.Font;
 
 /**
  * Canvas element for text rendering
@@ -53,9 +54,9 @@ public class TextElement extends CanvasElement {
      */
     private float _fontSize;
     /**
-     * font id
+     * font
      */
-    private int _font;
+    private Font _font;
 
     /**
      * Create Text Element
@@ -74,6 +75,8 @@ public class TextElement extends CanvasElement {
 
         _text = text;
         _fontSize = fontSize;
+        
+        _font = new Font(FONT_NAME);
 
         /* create color buffer and store color data */
         _col = NVGColor.create();
@@ -94,12 +97,12 @@ public class TextElement extends CanvasElement {
 
     @Override
     public void InitFromContext(long vg) {
-        _font = CreateFont(vg);
+        _font.Load("res/OpenSans-Bold.ttf", vg);
     }
 
     @Override
     public void RenderToCanvas(long vg) {
-        NanoVG.nvgFontFace(vg, "BOLD");
+        NanoVG.nvgFontFace(vg, _font.getName());
         NanoVG.nvgTextAlign(vg, NanoVG.NVG_ALIGN_MIDDLE | NanoVG.NVG_ALIGN_CENTER);
         float maxSize = Display.getMaxWidth();
         float frameWidth = _transform.traverseViewportWidth();
@@ -115,33 +118,6 @@ public class TextElement extends CanvasElement {
                 _text);
     }
 
-    /**
-     * Create a font
-     * 
-     * @param vg
-     * @return integer id of font
-     */
-    static int CreateFont(long vg) {
-        int font = -1;
-        try {
-            InputStream file = TextElement.class.getResourceAsStream("/res/OpenSans-Bold.ttf");
-            if (file == null)
-                // We are in IDE
-                file = TextElement.class.getClassLoader().getResourceAsStream("OpenSans-Bold.ttf");
-            byte[] data = file.readAllBytes();
-            ByteBuffer buf = BufferUtils.createByteBuffer(data.length);
-            buf.put(data);
-            buf.flip();
-            font = NanoVG.nvgCreateFontMem(vg, FONT_NAME, buf, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return font;
-    }
-
     @Override
-    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) {
-        // TODO Auto-generated method stub
-        
-    }
+    protected void ReceiveEvent(CanvasElementEvent evt, double mouseX, double mouseY) { }
 }
