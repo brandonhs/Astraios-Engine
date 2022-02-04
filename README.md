@@ -4,6 +4,8 @@
 
 ## About The Project
 
+**This engine is no longer in development and is not recommended for "real" use.**
+
 Astraios (əˈstriːəs) is a lighweight game engine built from the ground up using lwjgl3.
 
 ### Built With
